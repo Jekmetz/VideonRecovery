@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "start": "npm run compile-typescript && node ./output/script.js",
+    "compile-typescript": "tsc main.ts"
+  },
+  "dependencies": {
+    "puppeteer": "^13.0.1"
+  },
+  "type": "module",
+  "devDependencies": {
+    "typescript": "^4.5.4"
+  }
+}
