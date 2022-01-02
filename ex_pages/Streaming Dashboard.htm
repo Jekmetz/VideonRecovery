@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html ng-app="streamingApp" class="ng-scope" lang="en"><head><style type="text/css">.ng-animate.item:not(.left):not(.right){-webkit-transition:0s ease-in-out left;transition:0s ease-in-out left}</style><style type="text/css">@charset "UTF-8";[ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\:form{display:block;}</style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Streaming Dashboard</title>
+
+    <!-- Help prevent caching -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <!-- base href="http://192.168.1.2/" -->
+    <!-- Bootstrap core CSS -->
+    <link href="Streaming%20Dashboard_files/bootstrap.css" rel="stylesheet">
+    <link href="Streaming%20Dashboard_files/bootstrap-switch.css" rel="stylesheet">
+
+    <!-- Custom styles -->
+    <link href="Streaming%20Dashboard_files/dialogs.css" rel="stylesheet">
+    <link href="Streaming%20Dashboard_files/font-awesome.css" rel="stylesheet">
+    <link href="Streaming%20Dashboard_files/main.css" rel="stylesheet">
+
+    <!-- styles.css is included last so it can override the styles defined in the above style sheets -->
+    <link href="Streaming%20Dashboard_files/styles.css" rel="stylesheet">
+  </head>
+
+  <!-- ngView:  --><body ng-view="" class="ng-scope"><script type="text/ng-template" id="popoverTemplateCopy.html" class="ng-scope">
+  <div ng-show="copyStatus">{{_strings.CopyToClipboard}} {{copyStatus}}.</div>
+  <div ng-show="!copyStatus"><i class="fa fa-spinner fa-spin fa-spinning"></i></div>
+</script>
+<script type="text/ng-template" id="questionTemplateGenericRtmp.html" class="ng-scope">
+  <div class="rtmp-help-template">
+    <p><i>{{_strings.Encoder.Outputs.RTMP.Help1}}:</i></p>
+    <ol>
+      <li>[<b>{{_strings.Server}} {{_strings.URL}}</b>]/[<b>{{_strings.Stream}} {{_strings.Key}}</b> {{_strings.Or}} <b>{{_strings.StreamName}}</b>]
+      <br/>
+      {{_strings.Encoder.Outputs.RTMP.Help2}}</li>
+      <li>[<b>{{_strings.Server}} {{_strings.URL}}</b>]/[<b>{{_strings.Application}} {{_strings.Name}}</b>]/[<b>{{_strings.StreamName}}</b>]
+      <br/>
+      {{_strings.Encoder.Outputs.RTMP.Help3}}</li>
+      <li>[<b>{{_strings.Username}}</b>]:[<b>{{_strings.Password}}</b>]@[<b>1</b> {{_strings.Or}} <b>2</b>]
+      <br/>
+      {{_strings.Encoder.Outputs.RTMP.Help4}}</li>
+    </ol>
+    <p>{{_strings.Encoder.Outputs.RTMP.Help5}}<b>:1935</b>/{{_strings.Encoder.Outputs.RTMP.Help6}}</p>
+    <p>{{_strings.Encoder.Outputs.RTMP.Help7}}</p>
+    <p>{{_content.Help.RTMPLine}} <a href="{{_content.Help.URL}}" target="_blank">{{_content.Help.URL}}</a></p>
+  </div>
+</script>
+<script type="text/ng-template" id="popoverTemplateTableStatus.html" class="ng-scope">
+  <span>{{getSourceTableStatusMessage(source.sharedata)}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateRtmpStatus0.html" class="ng-scope">
+  <span ng-show="outputRtmp1.activeService == _strings.Rest.YouTube">
+    <p ng-show="outputRtmp1.youTubeStatus.length == 1">{{outputRtmp1.youTubeStatus[0].description}}</p>
+    <ul class="youtube-status" ng-show="outputRtmp1.youTubeStatus.length > 1">
+      <li ng-repeat="item in outputRtmp1.youTubeStatus">{{item.description}}</li>
+    </ul>
+    <span ng-show="outputRtmp1.youTubeStatus.length == 0">{{getStatusMessage(outputRtmp1.data)}}</span>
+  </span>
+  <span ng-hide="outputRtmp1.activeService == _strings.Rest.YouTube">{{getStatusMessage(outputRtmp1.data)}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateRtmpStatus1.html" class="ng-scope">
+  <span ng-show="outputRtmp2.activeService == _strings.Rest.YouTube">
+    <p ng-show="outputRtmp2.youTubeStatus.length == 1">{{outputRtmp2.youTubeStatus[0].description}}</p>
+    <ul class="youtube-status" ng-show="outputRtmp2.youTubeStatus.length > 1">
+      <li ng-repeat="item in outputRtmp2.youTubeStatus">{{item.description}}</li>
+    </ul>
+    <span ng-show="outputRtmp2.youTubeStatus.length == 0">{{getStatusMessage(outputRtmp2.data)}}</span>
+  </span>
+  <span ng-hide="outputRtmp2.activeService == _strings.Rest.YouTube">{{getStatusMessage(outputRtmp2.data)}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateRtmpStatus2.html" class="ng-scope">
+  <span ng-show="outputRtmp3.activeService == _strings.Rest.YouTube">
+    <p ng-show="outputRtmp3.youTubeStatus.length == 1">{{outputRtmp3.youTubeStatus[0].description}}</p>
+    <ul class="youtube-status" ng-show="outputRtmp3.youTubeStatus.length > 1">
+      <li ng-repeat="item in outputRtmp3.youTubeStatus">{{item.description}}</li>
+    </ul>
+    <span ng-show="outputRtmp3.youTubeStatus.length == 0">{{getStatusMessage(outputRtmp3.data)}}</span>
+  </span>
+  <span ng-hide="outputRtmp3.activeService == _strings.Rest.YouTube">{{getStatusMessage(outputRtmp3.data)}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateTableRecord.html" class="ng-scope">
+  <span>{{getSourceTableRecordMessage(source.sharedata)}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateUnsupportedResolution.html" class="ng-scope">
+  <span>{{_strings.Encoder.Status.ResolutionUnsupported}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateNoSignalDetected.html" class="ng-scope">
+  <span>{{_strings.Encoder.Status.NoSignalDetected}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateFilesOnUSB.html" class="ng-scope">
+  <div class="files-on-usb">
+    <table class="table table-striped">
+      <thead ng-if="!outputFile.usbDownloadsEnabled && outputFile.filesOnUSB.length != 0">
+        <tr><td><alert type="warning">{{_strings.Encoder.Outputs.FileRecording.AlertTurnOffRecording}}</alert></td></tr>
+      </thead>
+      <tbody ng-show="outputFile.filesOnUSB.length != 0">
+        <tr ng-repeat="file in outputFile.filesOnUSB">
+          <td ng-if="file != ''">
+            <a ng-show="outputFile.usbDownloadsEnabled" href="http://{{outputFile.data.ip}}/cgi-bin/get_file.cgi?name={{outputFile.data.identifier.file_record.drive_name}}&file={{file}}" target="_self">{{file}}</a>
+            <span ng-hide="outputFile.usbDownloadsEnabled">{{file}}</span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="no-files-usb" ng-hide="outputFile.filesOnUSB.length != 0">
+    - {{_strings.Empty}} -
+  </div>
+</script>
+<script type="text/ng-template" id="popoverTemplateFTPStatusHistory.html" class="ng-scope">
+  <div class="ftp-status">
+    <table class="table table-striped">
+      <tbody ng-hide="outputFile.ftpStatusHistory.length == 0">
+      <tr ng-repeat="ftpStatus in outputFile.ftpStatusHistory">
+        <td class="cell1"><span class="text-warning" ng-show="ftpStatus.statusType == 'error'" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateFtpHistoryErrorStatus.html'">
+          <i class="fa fa-exclamation-circle"></i></span>
+        </td>
+        <td class="cell2" ng-if="file != ''">
+          {{ftpStatus.fileName}}
+        </td>
+        <td class="cell3">
+          <span>{{ftpStatus.timestamp}}</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <span class="no-files-ftp" ng-hide="outputFile.ftpStatusHistory.length != 0">
+    - {{_strings.Empty}} -
+  </span>
+</script>
+<script type="text/ng-template" id="popoverTemplateFtpHistoryErrorStatus.html" class="ng-scope">
+  <span>{{ftpStatus.status}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateFtpServerStatus.html" class="ng-scope">
+  <span>{{_strings.Encoder.Outputs.FTPUpload.CouldNotResolveHost}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateFtpAuthStatus.html" class="ng-scope">
+  <span>{{_strings.Encoder.Outputs.FTPUpload.BadUsernamePassword}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateFtpFilepathStatus.html" class="ng-scope">
+  <span>{{_strings.Encoder.Outputs.FTPUpload.FilepathUnavailable}}</span>
+</script>
+<script type="text/ng-template" id="popoverTemplateXMLStatus.html" class="ng-scope">
+  <p class="xml-status">{{_strings.XMLWarning1}}<br />{{_strings.XMLWarning2}}</p>
+</script>
+
+
+<div class="start ng-scope">
+  <nav class="navbar navbar-fixed-top ng-isolate-scope" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="http://192.168.1.2/index.html"><img alt="Logo" src="Streaming%20Dashboard_files/logo.png"></a>
+    </div>
+    <div class="alert-container">
+      <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="updatesPending &amp;&amp; !extraUpdates">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+        Please reboot to finish installing updates.
+      </span></div>
+</div>
+      <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="extraUpdates">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+        Too many update files on device, please fix before reboot.
+      </span></div>
+</div>
+      <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="remoteUpdatesAvailable">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+        Updates available! Check for updates on the Advanced tab.
+      </span></div>
+</div>
+    </div>
+    <ul>
+      <li class="ng-binding">4713-0110</li>
+      <li class="line"></li>
+      <li class="ng-binding">192.168.1.2</li>
+    </ul>
+  </div>
+</nav>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-sm-3 col-md-2 sidebar ng-isolate-scope">
+  <ul class="nav nav-sidebar">
+    <!-- ngIf: _content.Help.TabExists --><li ng-if="_content.Help.TabExists" class="ng-scope"><a class="extra-pad-first small"></a></li><!-- end ngIf: _content.Help.TabExists -->
+    <!-- ngIf: !_content.Help.TabExists -->
+    <li class="active"><a href="http://192.168.1.2/encoders/" class="extra-pad ng-binding">Encoder Control</a></li>
+    <li class=""><a href="http://192.168.1.2/decoders/" class="extra-pad ng-binding">Decoder Control</a></li>
+    <li class=""><a href="http://192.168.1.2/settings/" class="extra-pad ng-binding">Device Settings</a></li>
+    <li class=""><a href="http://192.168.1.2/advanced/" class="extra-pad ng-binding">Advanced</a></li>
+    <!-- ngIf: _content.Help.TabExists --><li class="" ng-if="_content.Help.TabExists"><a href="https://support.videon-central.com/" target="_blank" class="extra-pad ng-binding">Help</a></li><!-- end ngIf: _content.Help.TabExists -->
+  </ul>
+</div>
+      <div class="content-area encoder-control">
+        <h3 class="ng-binding">Encoders</h3>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th class="col1 ng-binding">Device Name</th>
+              <th class="col2 text-center ng-binding" ng-hide="_content.Audio">AV Input Type</th>
+              <th class="col8 text-center ng-hide" ng-show="_content.Audio">
+                <div class="text-center overload-text ng-binding"></div>
+                <div class="pop-div" popover-placement="bottom" popover-trigger="mouseenter" popover="">
+                  <i class="fa fa-question-circle text-warning"></i>
+                </div>
+              </th>
+              <th class="col3 text-center ng-binding">Input Resolution</th>
+              <th class="col4 text-center ng-binding">Streaming</th>
+              <th class="col5 text-center ng-binding">Recording</th>
+              <th class="col9 text-center ng-binding ng-hide" ng-show="_content.Audio"></th>
+              <th class="col6 text-center ng-binding">Encoder Settings</th>
+              <th class="col7 text-center ng-binding">Output Settings</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ngRepeat: source in sources --><tr ng-repeat="source in sources" class="ng-scope">
+              <th scope="row">
+                <div class="ellipsis"><a class="table-link ng-binding" href="http://192.168.1.2/encoders">4713-0110 <!-- ngIf: source.ip_address == currentIP --><span ng-if="source.ip_address == currentIP" class="ng-binding ng-scope">(Current Device)</span><!-- end ngIf: source.ip_address == currentIP --></a></div>
+                <span class="pull-right ng-hide" ng-show="source.sharedata.xml_active" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateXMLStatus.html'">
+                  <i class="fa fa-lock" aria-hidden="true"></i>
+                </span>
+              </th>
+              <td class="text-center col2" ng-hide="_content.Audio">
+                <select ng-model="source.sharedata.video_input.value" ng-change="saveAVInputType(source)" class="form-control ng-valid ng-dirty ng-valid-parse ng-touched" ng-options="item for item in source.sharedata.video_input.possible_values"><option value="0" label="HDMI with Embedded Audio">HDMI with Embedded Audio</option><option value="1" label="HDMI with 3.5mm Audio">HDMI with 3.5mm Audio</option><option value="2" label="SDI with Embedded Audio">SDI with Embedded Audio</option><option value="3" label="SDI with 3.5mm Audio">SDI with 3.5mm Audio</option><option value="4" label="Auto detect" selected="selected">Auto detect</option></select>
+              </td>
+              <td class="text-center col8 ng-hide" ng-show="_content.Audio">
+                <overload ip="source.ip_address" deviceid="source.device_id" row="rowList"></overload>
+              </td>
+              <td class="text-center">
+                <div class="text-center" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateNoSignalDetected.html'">
+                  <span ng-show="!source.sharedata.valid &amp;&amp; !source.refreshing" class="text-danger ng-hide"><i class="fa fa-remove"></i></span>
+                </div>
+                <div class="text-center" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateUnsupportedResolution.html'">
+                  <span ng-show="source.sharedata.valid &amp;&amp; source.sharedata.resolution == _strings.Rest.UNDEFINED &amp;&amp; !source.refreshing" class="text-warning ng-hide"><i class="fa fa-exclamation-circle"></i></span>
+                </div>
+                <span ng-show="source.sharedata.valid &amp;&amp; source.sharedata.resolution != _strings.Rest.UNDEFINED &amp;&amp; !source.refreshing" class="ng-binding">1080i59.94</span>
+                <span ng-show="source.refreshing" class="ng-hide"><i class="fa fa-spinner fa-spin fa-spinning"></i></span>
+              </td>
+              <td>
+                <div class="text-center" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateTableStatus.html'">
+                  <div ip="source.ip_address" deviceid="source.device_id" sharedata="source.sharedata" row="rowList" class="ng-isolate-scope"><span class="text-danger ng-hide" ng-show="sharedata.status == 'remove'"><i class="fa fa-remove"></i></span><span class="text-warning" ng-show="sharedata.status == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span><span class="text-center ng-hide" ng-show="sharedata.status == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span><span class="text-success ng-hide" ng-show="sharedata.status == 'check'"><i class="fa fa-check"></i></span></div>
+                </div>
+              </td>
+              <td>
+                <div class="text-center" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateTableRecord.html'">
+                  <span class="text-danger" ng-show="source.sharedata.record_status == 'remove'"><i class="fa fa-remove"></i></span>
+                  <span class="text-warning ng-hide" ng-show="source.sharedata.record_status == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
+                  <span class="text-center ng-hide" ng-show="source.sharedata.record_status == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span class="text-success ng-hide" ng-show="source.sharedata.record_status == 'check'"><i class="fa fa-check"></i></span>
+                </div>
+              </td>
+              <td class="col9 ng-hide" ng-show="_content.Audio">
+                <audioinput ip="source.ip_address" deviceid="source.device_id"></audioinput>
+              </td>
+              <td class="col6"><a class="btn btn-primary btn-table ng-binding" href="#" data-toggle="modal" data-target=".config-modal" ng-click="editEncoderSettings(source)">Configure</a></td>
+              <td class="col7"><a class="btn btn-primary btn-table ng-binding" href="#" data-toggle="modal" data-target=".output-modal" ng-click="editOutputSettings(source)">Configure</a></td>
+            </tr><!-- end ngRepeat: source in sources -->
+          </tbody>
+        </table>
+<!-- Configuration Modal -->
+<div ng-keyup="keyboardSaveEncoderSettings($event)" class="modal fade config-modal" data-backdrop="static" data-keyboard="false" id="configModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="closeEncoderSettings()" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title ng-binding">Encoder Settings</h4>
+      </div>
+      <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="XMLpollingEnabled">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+        XML Configuration is enabled. These values may be overwritten.
+      </span></div>
+</div>
+      <div class="modal-body">
+        <div class="text-center ng-hide" ng-show="editModalLoading"><i class="fa fa-spinner fa-spin fa-spinning"></i></div>
+        <div ng-hide="editModalLoading" class="">
+          <form name="editmodalform" role="form" class="ng-invalid ng-invalid-required ng-dirty ng-valid-parse">
+            <div>
+              <label class="ng-binding">Video Input Resolution:</label>
+              <span ng-hide="encoderSettings.data.resolution.value == _strings.Rest.UNDEFINED || !encoderSettings.validSource" class="ng-binding">1080i59.94</span>
+            </div>
+            <div>
+              <span class="scaling-group">
+                <label class="ng-binding">Video Scaling</label>
+                <br>
+                <select ng-model="encoderSettings.data.scaling_resolution.value" ng-change="encoderSettings.updateOutputResolution()" class="form-control lg ng-valid ng-valid-required ng-touched ng-dirty ng-valid-parse" ng-options="item for item in encoderSettings.data.scaling_resolution.possible_values" required=""><option value="0" label="Passthrough">Passthrough</option><option value="1" label="320x180p">320x180p</option><option value="2" label="480x270p">480x270p</option><option value="3" label="640x360p">640x360p</option><option value="4" label="720x480p">720x480p</option><option value="5" label="960x540p">960x540p</option><option value="6" label="1280x720p">1280x720p</option><option value="7" label="1920x1080p" selected="selected">1920x1080p</option></select>
+              </span>
+              <span class="limit-30-group">
+                <label class="ng-binding">Limit To 30FPS</label>
+                <br>
+                <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small bootstrap-switch-id-limitTo30FPS bootstrap-switch-animate" style="width: 74px;"><div class="bootstrap-switch-container" style="width: 108px; margin-left: -36px;"><span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 36px;">On</span><span class="bootstrap-switch-label" style="width: 36px;">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 36px;">Off</span><input type="checkbox" data-size="small" id="limitTo30FPS" name="limitTo30FPS"></div></div>
+              </span>
+            </div>
+            <div>
+              <label class="ng-binding">Encoded Video Resolution:</label>
+              <span ng-hide="encoderSettings.data.output_resolution == _strings.Rest.UNDEFINED" class="ng-binding">1080p29.97</span>
+            </div>
+            <div>
+              <label class="ng-binding">Encoding Mode</label>
+              <br>
+              <select ng-model="encoderSettings.data.bitrate_mode.value" ng-options="item for item in [_strings.Rest.ConstantBitrate, _strings.Rest.VariableBitrate]" type="text" class="form-control lg ng-pristine ng-untouched ng-valid ng-valid-required" required=""><option value="0" label="Constant Bitrate">Constant Bitrate</option><option value="1" label="Variable Bitrate" selected="selected">Variable Bitrate</option></select>
+            </div>
+            <div>
+              <label class="ng-binding">Keyframe Interval</label>
+              <br>
+              <input class="form-control sm ng-pristine ng-untouched ng-hide ng-valid ng-valid-required" ng-show="encoderSettings.data.keyframe_interval.unit == _strings.Rest.Frames" name="einterval_frames" ng-model="encoderSettings.data.keyframe_interval.interval" ng-disabled="encoderSettings.data.latency_mode.value == _strings.Rest.LatencyRealtime" type="number" min="3" max="1000" step="1" ng-blur="encoderSettings.checkKeyframeRange()" required="" value="1">
+              <input class="form-control sm ng-pristine ng-untouched ng-valid ng-valid-required" ng-show="encoderSettings.data.keyframe_interval.unit == _strings.Rest.Seconds" name="einterval_ms" ng-model="encoderSettings.data.keyframe_interval.interval" ng-disabled="encoderSettings.data.latency_mode.value == _strings.Rest.LatencyRealtime" type="number" min="0.25" max="16.5" step=".25" ng-blur="encoderSettings.checkKeyframeRange()" required="" value="1">
+              <select class="form-control md left-pad ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="encoderSettings.data.keyframe_interval.unit" ng-options="item for item in encoderSettings.data.keyframe_interval.possible_units" ng-disabled="encoderSettings.data.latency_mode.value == _strings.Rest.LatencyRealtime" type="text" ng-change="encoderSettings.checkKeyframeRange()" required=""><option value="0" selected="selected" label="Second(s)">Second(s)</option><option value="1" label="Frames">Frames</option></select>
+            </div>
+            <div ng-hide="encoderSettings.data.latency_mode.possible_values.length &lt; 2" class="ng-hide">
+              <label class="ng-binding">Quality/Latency</label>
+              <br>
+              <select class="form-control lg ng-pristine ng-untouched ng-valid ng-valid-required" ng-show="encoderSettings.data.video_codec.value != _strings.Rest.HEVC" ng-model="encoderSettings.data.latency_mode.value" ng-options="item for item in encoderSettings.data.latency_mode.possible_values" required=""><option value="0" selected="selected" label="Normal">Normal</option></select>
+              <select class="form-control lg ng-hide" ng-show="encoderSettings.data.video_codec.value == _strings.Rest.HEVC">
+                <option value="0" label="Normal" class="ng-binding" selected="selected">Normal</option>
+              </select>
+            </div>
+            <div>
+              <label class="ng-binding">Video Encoding</label>
+              <br>
+              <select class="form-control lg ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="encoderSettings.data.video_codec.value" ng-options="item for item in encoderSettings.data.video_codec.possible_values" type="text" required=""><option value="0" selected="selected" label="H.264 (AVC)">H.264 (AVC)</option></select>
+              <input class="form-control sm left-pad ng-pristine ng-untouched ng-valid ng-valid-required" name="ebitrate" ng-model="encoderSettings.data.video_bitrate.value" type="number" placeholder="Bitrate" required="" value="4000">
+              <span class="suffix ng-binding">kbps</span>
+            </div>
+            <div ng-show="encoderSettings.data.video_codec.value == _strings.Rest.AVC" class="">
+              <label class="ng-binding">H.264 Profile</label>
+              <br>
+              <select class="form-control lg ng-pristine ng-untouched ng-valid ng-valid-required" type="text" ng-model="encoderSettings.data.h264_profile.value" ng-options="item for item in encoderSettings.data.h264_profile.possible_values" required=""><option value="0" selected="selected" label="High Profile">High Profile</option><option value="1" label="Main Profile">Main Profile</option><option value="2" label="Baseline Profile">Baseline Profile</option></select>
+            </div>
+            <div ng-show="encoderSettings.data.video_codec.value == _strings.Rest.HEVC" class="ng-hide">
+              <label class="ng-binding">H.265 Profile</label>
+              <br>
+              <select class="form-control lg" type="text" required="">
+                <option value="" selected="selected" class="ng-binding">Main Profile</option>
+              </select>
+            </div>
+            <div>
+              <label class="ng-binding">Audio Encoding</label>
+              <br>
+              <select class="form-control lg ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="encoderSettings.data.audio_codec.value" ng-options="item for item in encoderSettings.data.audio_codec.possible_values" type="text" required=""><option value="0" selected="selected" label="MPEG-4 AAC-LC">MPEG-4 AAC-LC</option></select>
+              <select class="form-control sm left-pad ng-pristine ng-untouched ng-invalid ng-invalid-required ng-hide" ng-show="encoderSettings.data.audio_codec.value == _strings.Rest.MPEG1L2" ng-model="encoderSettings.data.audio_bitrate_mpeg1_l2.value" ng-options="item for item in ['128', '192', '256', '384']" required=""><option value="?" selected="selected" label=""></option><option value="0" label="128">128</option><option value="1" label="192">192</option><option value="2" label="256">256</option><option value="3" label="384">384</option></select>
+              <select class="form-control sm left-pad ng-pristine ng-untouched ng-valid ng-valid-required" ng-hide="encoderSettings.data.audio_codec.value == _strings.Rest.MPEG1L2" ng-model="encoderSettings.data.audio_bitrate_aac.value" ng-options="item for item in encoderSettings.data.audio_bitrate_aac.possible_values" required=""><option value="0" label="64">64</option><option value="1" label="96">96</option><option value="2" selected="selected" label="128">128</option><option value="3" label="192">192</option><option value="4" label="256">256</option><option value="5" label="320">320</option></select>
+              <span class="suffix ng-binding">kbps</span>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="text-success pull-left text-status ng-binding ng-hide" ng-show="msg"></div>
+        <div class="text-danger pull-left text-status ng-binding ng-hide" ng-show="err"></div>
+        <button type="button" class="btn btn-primary btn-dialog" ng-show="!editModalLoading" ng-click="saveEncoderSettings(true)">
+          <i ng-show="saveLoading" class="fa fa-spinner fa-spin ng-hide"></i>
+          <span ng-hide="saveLoading" class="ng-binding">OK</span>
+        </button>
+        <button type="button" class="btn btn-default btn-dialog ng-binding" ng-show="!editModalLoading" ng-click="closeEncoderSettings()">Cancel</button>
+        <button type="button" class="btn btn-default btn-dialog" ng-show="!editModalLoading" ng-click="saveEncoderSettings(false)">
+          <i ng-show="saveLoading" class="fa fa-spinner fa-spin ng-hide"></i>
+          <span ng-hide="saveLoading" class="ng-binding">Apply</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  End Of Modal -->
+<!-- Output Modal -->
+<div ng-keyup="keyboardSaveOutputSettings($event)" class="modal fade output-modal" data-backdrop="static" data-keyboard="false" id="outputModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" ng-click="closeOutputSettings()" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title ng-binding">Output Settings</h4>
+        <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="XMLpollingEnabled">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+          XML Configuration is enabled. These values may be overwritten.
+        </span></div>
+</div>
+      </div>
+      <div class="modal-middle">
+        <div class="nav-tabs-container tabs-left ng-isolate-scope" vertical="true">
+  <ul class="nav nav-tabs nav-stacked" ng-class="{'nav-stacked': vertical, 'nav-justified': justified}" ng-transclude="">
+          <!-- ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="RTMP 1" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope active">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">RTMP 1</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="RTMP 2" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">RTMP 2</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="RTMP 3" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">RTMP 3</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="HTTP Push" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope ng-hide">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">HTTP Push</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="HTTP Pull" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">HTTP Pull</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="Multicast" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">Multicast</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="Unicast 1" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">Unicast 1</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="Unicast 2" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">Unicast 2</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="RTSP" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">RTSP</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="File Recording" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">File Recording</a>
+</li><!-- end ngRepeat: tab in outputTabs --><li ng-class="{active: active, disabled: disabled}" ng-repeat="tab in outputTabs" heading="FTP Upload" ng-hide="tab.hidden" disable="tab.disabled" active="tab.active" class="ng-isolate-scope">
+  <a href="" ng-click="select()" tab-heading-transclude="" class="ng-binding">FTP Upload</a>
+</li><!-- end ngRepeat: tab in outputTabs -->
+        </ul>
+  <div class="tab-content">
+    <!-- ngRepeat: tab in tabs --><div class="tab-pane ng-scope active" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs --><div class="tab-pane ng-scope" ng-repeat="tab in tabs" ng-class="{active: tab.active}" tab-content-transclude="tab">
+    </div><!-- end ngRepeat: tab in tabs -->
+  </div>
+</div>
+        <div class="modal-body">
+          <div class="text-center ng-hide" ng-show="editModalLoading"> <i class="fa fa-spinner fa-spin fa-spinning"></i></div>
+          <div ng-show="outputTabs[5].active" class="ng-hide">
+            <div class="multicast" ng-hide="editModalLoading">
+              <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                <label class="padded-lg ng-binding">Multicast Output</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small bootstrap-switch-id-multicastCheckbox"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" id="multicastCheckbox" name="multicastCheckbox"></div></div>
+                <button type="button" class="btn btn-default btn-copy ng-binding" ng-click="outputMulticast.copyURL()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                <br>
+                <select class="url1 form-control ng-pristine ng-untouched ng-valid" ng-model="outputMulticast.data.identifier.protocol" type="text" placeholder="Protocol">
+                  <option value="RTP" selected="selected">rtp://</option>
+                  <option value="RAW_UDP">udp://</option>
+                </select>
+                <input class="url2 form-control ng-pristine ng-untouched ng-valid" ng-model="outputMulticast.data.identifier.multicast_ip_address" type="text" placeholder="IP Address" ng-blur="outputMulticast.parseURL()">
+                <span class="url3">:</span>
+                <input class="url4 form-control ng-pristine ng-untouched ng-valid" ng-model="outputMulticast.data.identifier.udp_port" type="number" placeholder="Port">
+                <input class="url5 form-control ng-pristine ng-untouched ng-valid" ng-model="outputMulticast.data.identifier.ttl" type="number" placeholder="TTL">
+              </form>
+            </div>
+          </div>
+          <!-- ngRepeat: outputUnicast in [outputUnicast1, outputUnicast2] --><div ng-repeat="outputUnicast in [outputUnicast1, outputUnicast2]" class="ng-scope">
+            <div ng-show="outputTabs[outputUnicast.tabIndex].active" class="ng-hide">
+              <div class="unicast" ng-hide="editModalLoading">
+                <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                  <label class="padded-lg ng-binding">Unicast Output 1</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="unicastCheckbox6"></div></div>
+                  <button type="button" class="btn btn-default btn-copy ng-binding" ng-click="outputUnicast.copyURL()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <br>
+                  <select class="form-control url1 ng-pristine ng-untouched ng-valid" ng-model="outputUnicast.data.identifier.protocol" type="text" placeholder="Protocol">
+                    <option value="RTP" selected="selected">rtp://</option>
+                    <option value="RAW_UDP">udp://</option>
+                  </select>
+                  <input class="form-control url2 ng-pristine ng-untouched ng-valid" ng-model="outputUnicast.data.identifier.ip_address" type="text" placeholder="IP Address" ng-blur="outputUnicast.parseURL()">
+                  <span class="url3">:</span>
+                  <input class="form-control url4 ng-pristine ng-untouched ng-valid" ng-model="outputUnicast.data.identifier.udp_port" type="number" placeholder="Port">
+                </form>
+              </div>
+            </div>
+          </div><!-- end ngRepeat: outputUnicast in [outputUnicast1, outputUnicast2] --><div ng-repeat="outputUnicast in [outputUnicast1, outputUnicast2]" class="ng-scope">
+            <div ng-show="outputTabs[outputUnicast.tabIndex].active" class="ng-hide">
+              <div class="unicast" ng-hide="editModalLoading">
+                <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                  <label class="padded-lg ng-binding">Unicast Output 2</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="unicastCheckbox7"></div></div>
+                  <button type="button" class="btn btn-default btn-copy ng-binding" ng-click="outputUnicast.copyURL()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <br>
+                  <select class="form-control url1 ng-pristine ng-untouched ng-valid" ng-model="outputUnicast.data.identifier.protocol" type="text" placeholder="Protocol">
+                    <option value="RTP" selected="selected">rtp://</option>
+                    <option value="RAW_UDP">udp://</option>
+                  </select>
+                  <input class="form-control url2 ng-pristine ng-untouched ng-valid" ng-model="outputUnicast.data.identifier.ip_address" type="text" placeholder="IP Address" ng-blur="outputUnicast.parseURL()">
+                  <span class="url3">:</span>
+                  <input class="form-control url4 ng-pristine ng-untouched ng-valid" ng-model="outputUnicast.data.identifier.udp_port" type="number" placeholder="Port">
+                </form>
+              </div>
+            </div>
+          </div><!-- end ngRepeat: outputUnicast in [outputUnicast1, outputUnicast2] -->
+          <!-- ngRepeat: outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3] --><div ng-repeat="outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3]" class="ng-scope">
+            <div ng-show="outputTabs[outputRtmp.tabIndex].active">
+              <div class="rtmp" ng-hide="editModalLoading">
+                <form name="editmodalform" role="form" class="ng-pristine ng-valid ng-valid-required">
+                  <label class="padded-lg ng-binding">RTMP Output 1</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-small bootstrap-switch-animate bootstrap-switch-on" style="width: 74px;"><div class="bootstrap-switch-container" style="margin-left: 0px; width: 108px;"><span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 36px;">On</span><span class="bootstrap-switch-label" style="width: 36px;">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 36px;">Off</span><input type="checkbox" data-size="small" name="rtmpCheckbox0" checked="checked"></div></div>
+                  <button class="btn btn-default btn-copy ng-binding" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" ng-click="outputRtmp.copyURL()" type="button" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <button class="btn btn-default btn-help" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" type="button" popover-placement="right-top" popover-template="'questionTemplateGenericRtmp.html'"><i class="fa fa-question"></i></button>
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="Streaming%20Dashboard_files/youtube_logo.png" width="80">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="Streaming%20Dashboard_files/facebook_logo.png" width="60">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="Streaming%20Dashboard_files/wowza_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="Streaming%20Dashboard_files/wowza_cloud_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="Streaming%20Dashboard_files/mediafusion_logo.png" width="120">
+                  <div class="status-icon" ng-show="outputRtmp.data.identifier.rtmp_service.value == outputRtmp.activeService" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateRtmpStatus0.html'">
+                    <span class="text-danger ng-hide" ng-show="outputRtmp.statusIcon == 'remove'"><i class="fa fa-remove"></i></span>
+                    <span class="text-warning ng-hide" ng-show="outputRtmp.statusIcon == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
+                    <span class="text-center ng-hide" ng-show="outputRtmp.statusIcon == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                    <span class="text-success" ng-show="outputRtmp.statusIcon == 'check'"><i class="fa fa-check"></i></span>
+                  </div>
+                  <br>
+                  <select ng-model="outputRtmp.data.identifier.rtmp_service.value" ng-hide="outputRtmp.data.identifier.rtmp_service.possible_values.length == 1" ng-change="outputRtmp.clearData()" type="text" class="form-control ng-pristine ng-untouched ng-valid" ng-options="item for item in outputRtmp.data.identifier.rtmp_service.possible_values | orderBy:rtmpValueSort"><option value="0" selected="selected" label="Generic RTMP">Generic RTMP</option><option value="1" label="Facebook">Facebook</option><option value="2" label="MediaFusion">MediaFusion</option><option value="3" label="Wowza Cloud">Wowza Cloud</option><option value="4" label="Wowza Streaming Engine">Wowza Streaming Engine</option><option value="5" label="YouTube">YouTube</option></select>
+                  <!-- Generic RTMP -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" class="">
+                    <select class="form-control generic-url1 ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="outputRtmp.data.protocol" type="text" required="">
+                      <option value="rtmp">rtmp://</option>
+                      <option value="rtmps" selected="selected">rtmps://</option>
+                    </select>
+                    <input ng-model="outputRtmp.data.identifier.rtmp_service_data.url" type="text" class="form-control generic-url2 ng-pristine ng-untouched ng-valid" placeholder="URL" ng-blur="outputRtmp.parseURL()" value="live-api-s.facebook.com:443/rtmp/FB-4557803224297266-0-AbzKgPTxjpSKDdVF">
+                    <br>
+                  </span>
+                  <!-- Wowza -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" class="ng-hide">
+                    <input class="form-control wowza-url1 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.server" type="text" placeholder="Server">
+                    <span class="wowza-url2">:</span>
+                    <input class="form-control wowza-url3 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.port" type="text" placeholder="Port (1935)">
+                    <br>
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.application" type="text" placeholder="Application">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.stream_name" type="text" placeholder="Stream Name">
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.username" type="text" placeholder="Username (Optional)">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.password" type="password" placeholder="Password (Optional)">
+                    <br>
+                  </span>
+                  <!-- Wowza Cloud -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" class="ng-hide">
+                    <input class="form-control wowza-url1 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.server" type="text" placeholder="Server">
+                    <span class="wowza-url2">:</span>
+                    <input class="form-control wowza-url3 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.port" type="text" placeholder="Port (1935)">
+                    <br>
+                    <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.stream_name" type="text" placeholder="Stream Name">
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.username" type="text" placeholder="Username (Optional)">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.password" type="password" placeholder="Password (Optional)">
+                    <br>
+                  </span>
+                  <!-- YouTube -->
+                  <span class="youtube ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube">
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.access_token == null">
+                      <label class="ng-binding">Pair with YouTube account</label>
+                      <br>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.pairWithYouTube()">
+                        <i ng-show="outputRtmp.youTubePairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.youTubePairing" class="ng-binding">Start Pairing</span>
+                      </button>
+                      <br>
+                      <span ng-show="outputRtmp.youTubePairing" class="ng-hide">
+                        <label class="ng-binding">To complete the pairing process:</label>
+                        <ul>
+                          <li class="ng-binding">
+                            Pairing Code: 
+                            <button ng-hide="outputRtmp.youTubeUserCode == ''" type="button" class="btn btn-default btn-copy ng-binding ng-hide" ng-click="outputRtmp.copyYouTubeCode()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy Code</button>
+                            <i class="fa fa-spinner fa-spin user-code" ng-show="outputRtmp.youTubeUserCode == ''"></i>
+                          </li>
+                          <li><a href="" target="_blank" class="ng-binding">Login to Google YouTube (opens in new window)</a></li>
+                        </ul>
+                      </span>
+                    </div>
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.access_token != null" class="ng-hide">
+                      <div ng-show="outputRtmp.youTubeStreamsList.length == 0" class="ng-hide">
+                        <label class="ng-binding">YouTube Stream List not yet Available</label>
+                        <div class="padded ng-binding">Please complete the following steps to activate a YouTube Stream</div>
+                        <ol>
+                          <li class="ng-binding">Browse to the following URL and enable live streaming</li>
+                          <ul>
+                            <li><a href="https://www.youtube.com/features" target="_blank">https://www.youtube.com/features</a></li>
+                          </ul>
+                          <li class="ng-binding">Browse to the following URL to create a default stream</li>
+                          <ul>
+                            <li><a href="https://www.youtube.com/live_dashboard" target="_blank">https://www.youtube.com/live_dashboard</a></li>
+                          </ul>
+                        </ol>
+                      </div>
+                      <div ng-show="outputRtmp.youTubeStreamsList.length != 0">
+                        <label class="ng-binding">Streams List for </label>
+                        <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as item.title for item in outputRtmp.youTubeStreamsList track by item.id" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                      </div>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.getYouTubeStreamsList()">
+                        <i ng-show="outputRtmp.youTubePairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.youTubePairing" class="ng-binding">Refresh</span>
+                      </button>
+                    </div>
+                  </span>
+                  <!-- Facebook -->
+                  <span class="facebook ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook">
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.user_access_token == null">
+                      <label class="top-pad ng-binding">Pair with Facebook account</label>
+                      <br>
+                      <a href="#" class="logo">
+                        <img src="Streaming%20Dashboard_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
+                      </a>
+                      <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                      <br>
+                      <span ng-show="outputRtmp.facebookPairing" class="ng-hide">
+                        <label class="ng-binding">To complete the pairing process:</label>
+                        <ul>
+                          <li class="ng-binding">
+                            Pairing Code: 
+                            <button ng-hide="outputRtmp.facebookUserCode == ''" type="button" class="btn btn-default btn-copy ng-binding ng-hide" ng-click="outputRtmp.copyFacebookCode()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy Code</button>
+                            <i class="fa fa-spinner fa-spin user-code" ng-show="outputRtmp.facebookUserCode == ''"></i>
+                          </li>
+                          <li><a href="" target="_blank" class="ng-binding">Login to Facebook (opens in new window)</a></li>
+                        </ul>
+                      </span>
+                    </div>
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.user_access_token != null" class="ng-hide">
+                      <div ng-show="outputRtmp.facebookPagesList.length == 0" class="ng-hide">
+                        <label class="ng-binding">Facebook Pages List not yet Available</label>
+                        <div class="padded ng-binding">Please complete the following steps</div>
+                        <ol>
+                          <li class="ng-binding">Browse to the following URL and create a page</li>
+                          <ul>
+                            <li><a href="https://www.facebook.com/pages/?category=your_pages" target="_blank">https://www.facebook.com/pages/?category=your_pages</a></li>
+                          </ul>
+                        </ol>
+                      </div>
+                      <div ng-show="outputRtmp.facebookPagesList.length != 0">
+                        <label class="ng-binding">Facebook pages for </label>
+                        <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as item.name for item in outputRtmp.facebookPagesList track by item.page_id" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                      </div>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.getFacebookAccountInfo()">
+                        <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.facebookPairing" class="ng-binding">Refresh</span>
+                      </button>
+                    </div>
+                  </span>
+                  <!-- MediaFusion -->
+                  <span class="mediafusion ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion">
+                    <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.apiKey" type="text" placeholder="API Key">
+                    <button type="button" class="btn btn-primary btn-right min-width" ng-click="outputRtmp.getMediaFusionBroadcasts()">
+                      <i ng-show="outputRtmp.isBusy" class="fa fa-spinner fa-spin ng-hide"></i>
+                      <span ng-hide="outputRtmp.isBusy" class="ng-binding">Get Broadcasts</span>
+                    </button>
+                    <span ng-show="outputRtmp.mediaFusionBroadcastList.length &gt; 0" class="ng-hide">
+                      <label class="ng-binding">Upcoming Broadcast List</label>
+                      <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as (item.eventStartTime + ' ' + item.eventName + item.frequency) for item in outputRtmp.mediaFusionBroadcastList track by item.eventName" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                    </span>
+                  </span>
+                </form>
+              </div>
+            </div>
+          </div><!-- end ngRepeat: outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3] --><div ng-repeat="outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3]" class="ng-scope">
+            <div ng-show="outputTabs[outputRtmp.tabIndex].active" class="ng-hide">
+              <div class="rtmp" ng-hide="editModalLoading">
+                <form name="editmodalform" role="form" class="ng-pristine ng-valid ng-valid-required">
+                  <label class="padded-lg ng-binding">RTMP Output 2</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="rtmpCheckbox1"></div></div>
+                  <button class="btn btn-default btn-copy ng-binding" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" ng-click="outputRtmp.copyURL()" type="button" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <button class="btn btn-default btn-help" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" type="button" popover-placement="right-top" popover-template="'questionTemplateGenericRtmp.html'"><i class="fa fa-question"></i></button>
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="Streaming%20Dashboard_files/youtube_logo.png" width="80">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="Streaming%20Dashboard_files/facebook_logo.png" width="60">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="Streaming%20Dashboard_files/wowza_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="Streaming%20Dashboard_files/wowza_cloud_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="Streaming%20Dashboard_files/mediafusion_logo.png" width="120">
+                  <div class="status-icon" ng-show="outputRtmp.data.identifier.rtmp_service.value == outputRtmp.activeService" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateRtmpStatus1.html'">
+                    <span class="text-danger ng-hide" ng-show="outputRtmp.statusIcon == 'remove'"><i class="fa fa-remove"></i></span>
+                    <span class="text-warning ng-hide" ng-show="outputRtmp.statusIcon == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
+                    <span class="text-center ng-hide" ng-show="outputRtmp.statusIcon == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                    <span class="text-success ng-hide" ng-show="outputRtmp.statusIcon == 'check'"><i class="fa fa-check"></i></span>
+                  </div>
+                  <br>
+                  <select ng-model="outputRtmp.data.identifier.rtmp_service.value" ng-hide="outputRtmp.data.identifier.rtmp_service.possible_values.length == 1" ng-change="outputRtmp.clearData()" type="text" class="form-control ng-pristine ng-untouched ng-valid" ng-options="item for item in outputRtmp.data.identifier.rtmp_service.possible_values | orderBy:rtmpValueSort"><option value="0" selected="selected" label="Generic RTMP">Generic RTMP</option><option value="1" label="Facebook">Facebook</option><option value="2" label="MediaFusion">MediaFusion</option><option value="3" label="Wowza Cloud">Wowza Cloud</option><option value="4" label="Wowza Streaming Engine">Wowza Streaming Engine</option><option value="5" label="YouTube">YouTube</option></select>
+                  <!-- Generic RTMP -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" class="">
+                    <select class="form-control generic-url1 ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="outputRtmp.data.protocol" type="text" required="">
+                      <option value="rtmp">rtmp://</option>
+                      <option value="rtmps" selected="selected">rtmps://</option>
+                    </select>
+                    <input ng-model="outputRtmp.data.identifier.rtmp_service_data.url" type="text" class="form-control generic-url2 ng-pristine ng-untouched ng-valid" placeholder="URL" ng-blur="outputRtmp.parseURL()" value="live-api-s.facebook.com:443/rtmp/">
+                    <br>
+                  </span>
+                  <!-- Wowza -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" class="ng-hide">
+                    <input class="form-control wowza-url1 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.server" type="text" placeholder="Server">
+                    <span class="wowza-url2">:</span>
+                    <input class="form-control wowza-url3 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.port" type="text" placeholder="Port (1935)">
+                    <br>
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.application" type="text" placeholder="Application">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.stream_name" type="text" placeholder="Stream Name">
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.username" type="text" placeholder="Username (Optional)">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.password" type="password" placeholder="Password (Optional)">
+                    <br>
+                  </span>
+                  <!-- Wowza Cloud -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" class="ng-hide">
+                    <input class="form-control wowza-url1 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.server" type="text" placeholder="Server">
+                    <span class="wowza-url2">:</span>
+                    <input class="form-control wowza-url3 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.port" type="text" placeholder="Port (1935)">
+                    <br>
+                    <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.stream_name" type="text" placeholder="Stream Name">
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.username" type="text" placeholder="Username (Optional)">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.password" type="password" placeholder="Password (Optional)">
+                    <br>
+                  </span>
+                  <!-- YouTube -->
+                  <span class="youtube ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube">
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.access_token == null">
+                      <label class="ng-binding">Pair with YouTube account</label>
+                      <br>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.pairWithYouTube()">
+                        <i ng-show="outputRtmp.youTubePairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.youTubePairing" class="ng-binding">Start Pairing</span>
+                      </button>
+                      <br>
+                      <span ng-show="outputRtmp.youTubePairing" class="ng-hide">
+                        <label class="ng-binding">To complete the pairing process:</label>
+                        <ul>
+                          <li class="ng-binding">
+                            Pairing Code: 
+                            <button ng-hide="outputRtmp.youTubeUserCode == ''" type="button" class="btn btn-default btn-copy ng-binding ng-hide" ng-click="outputRtmp.copyYouTubeCode()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy Code</button>
+                            <i class="fa fa-spinner fa-spin user-code" ng-show="outputRtmp.youTubeUserCode == ''"></i>
+                          </li>
+                          <li><a href="" target="_blank" class="ng-binding">Login to Google YouTube (opens in new window)</a></li>
+                        </ul>
+                      </span>
+                    </div>
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.access_token != null" class="ng-hide">
+                      <div ng-show="outputRtmp.youTubeStreamsList.length == 0" class="ng-hide">
+                        <label class="ng-binding">YouTube Stream List not yet Available</label>
+                        <div class="padded ng-binding">Please complete the following steps to activate a YouTube Stream</div>
+                        <ol>
+                          <li class="ng-binding">Browse to the following URL and enable live streaming</li>
+                          <ul>
+                            <li><a href="https://www.youtube.com/features" target="_blank">https://www.youtube.com/features</a></li>
+                          </ul>
+                          <li class="ng-binding">Browse to the following URL to create a default stream</li>
+                          <ul>
+                            <li><a href="https://www.youtube.com/live_dashboard" target="_blank">https://www.youtube.com/live_dashboard</a></li>
+                          </ul>
+                        </ol>
+                      </div>
+                      <div ng-show="outputRtmp.youTubeStreamsList.length != 0">
+                        <label class="ng-binding">Streams List for </label>
+                        <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as item.title for item in outputRtmp.youTubeStreamsList track by item.id" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                      </div>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.getYouTubeStreamsList()">
+                        <i ng-show="outputRtmp.youTubePairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.youTubePairing" class="ng-binding">Refresh</span>
+                      </button>
+                    </div>
+                  </span>
+                  <!-- Facebook -->
+                  <span class="facebook ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook">
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.user_access_token == null">
+                      <label class="top-pad ng-binding">Pair with Facebook account</label>
+                      <br>
+                      <a href="#" class="logo">
+                        <img src="Streaming%20Dashboard_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
+                      </a>
+                      <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                      <br>
+                      <span ng-show="outputRtmp.facebookPairing" class="ng-hide">
+                        <label class="ng-binding">To complete the pairing process:</label>
+                        <ul>
+                          <li class="ng-binding">
+                            Pairing Code: 
+                            <button ng-hide="outputRtmp.facebookUserCode == ''" type="button" class="btn btn-default btn-copy ng-binding ng-hide" ng-click="outputRtmp.copyFacebookCode()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy Code</button>
+                            <i class="fa fa-spinner fa-spin user-code" ng-show="outputRtmp.facebookUserCode == ''"></i>
+                          </li>
+                          <li><a href="" target="_blank" class="ng-binding">Login to Facebook (opens in new window)</a></li>
+                        </ul>
+                      </span>
+                    </div>
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.user_access_token != null" class="ng-hide">
+                      <div ng-show="outputRtmp.facebookPagesList.length == 0" class="ng-hide">
+                        <label class="ng-binding">Facebook Pages List not yet Available</label>
+                        <div class="padded ng-binding">Please complete the following steps</div>
+                        <ol>
+                          <li class="ng-binding">Browse to the following URL and create a page</li>
+                          <ul>
+                            <li><a href="https://www.facebook.com/pages/?category=your_pages" target="_blank">https://www.facebook.com/pages/?category=your_pages</a></li>
+                          </ul>
+                        </ol>
+                      </div>
+                      <div ng-show="outputRtmp.facebookPagesList.length != 0">
+                        <label class="ng-binding">Facebook pages for </label>
+                        <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as item.name for item in outputRtmp.facebookPagesList track by item.page_id" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                      </div>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.getFacebookAccountInfo()">
+                        <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.facebookPairing" class="ng-binding">Refresh</span>
+                      </button>
+                    </div>
+                  </span>
+                  <!-- MediaFusion -->
+                  <span class="mediafusion ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion">
+                    <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.apiKey" type="text" placeholder="API Key">
+                    <button type="button" class="btn btn-primary btn-right min-width" ng-click="outputRtmp.getMediaFusionBroadcasts()">
+                      <i ng-show="outputRtmp.isBusy" class="fa fa-spinner fa-spin ng-hide"></i>
+                      <span ng-hide="outputRtmp.isBusy" class="ng-binding">Get Broadcasts</span>
+                    </button>
+                    <span ng-show="outputRtmp.mediaFusionBroadcastList.length &gt; 0" class="ng-hide">
+                      <label class="ng-binding">Upcoming Broadcast List</label>
+                      <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as (item.eventStartTime + ' ' + item.eventName + item.frequency) for item in outputRtmp.mediaFusionBroadcastList track by item.eventName" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                    </span>
+                  </span>
+                </form>
+              </div>
+            </div>
+          </div><!-- end ngRepeat: outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3] --><div ng-repeat="outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3]" class="ng-scope">
+            <div ng-show="outputTabs[outputRtmp.tabIndex].active" class="ng-hide">
+              <div class="rtmp" ng-hide="editModalLoading">
+                <form name="editmodalform" role="form" class="ng-pristine ng-valid ng-valid-required">
+                  <label class="padded-lg ng-binding">RTMP Output 3</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="rtmpCheckbox2"></div></div>
+                  <button class="btn btn-default btn-copy ng-binding" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" ng-click="outputRtmp.copyURL()" type="button" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <button class="btn btn-default btn-help" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" type="button" popover-placement="right-top" popover-template="'questionTemplateGenericRtmp.html'"><i class="fa fa-question"></i></button>
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="Streaming%20Dashboard_files/youtube_logo.png" width="80">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="Streaming%20Dashboard_files/facebook_logo.png" width="60">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="Streaming%20Dashboard_files/wowza_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="Streaming%20Dashboard_files/wowza_cloud_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="Streaming%20Dashboard_files/mediafusion_logo.png" width="120">
+                  <div class="status-icon" ng-show="outputRtmp.data.identifier.rtmp_service.value == outputRtmp.activeService" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateRtmpStatus2.html'">
+                    <span class="text-danger ng-hide" ng-show="outputRtmp.statusIcon == 'remove'"><i class="fa fa-remove"></i></span>
+                    <span class="text-warning ng-hide" ng-show="outputRtmp.statusIcon == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
+                    <span class="text-center ng-hide" ng-show="outputRtmp.statusIcon == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                    <span class="text-success ng-hide" ng-show="outputRtmp.statusIcon == 'check'"><i class="fa fa-check"></i></span>
+                  </div>
+                  <br>
+                  <select ng-model="outputRtmp.data.identifier.rtmp_service.value" ng-hide="outputRtmp.data.identifier.rtmp_service.possible_values.length == 1" ng-change="outputRtmp.clearData()" type="text" class="form-control ng-pristine ng-untouched ng-valid" ng-options="item for item in outputRtmp.data.identifier.rtmp_service.possible_values | orderBy:rtmpValueSort"><option value="0" selected="selected" label="Generic RTMP">Generic RTMP</option><option value="1" label="Facebook">Facebook</option><option value="2" label="MediaFusion">MediaFusion</option><option value="3" label="Wowza Cloud">Wowza Cloud</option><option value="4" label="Wowza Streaming Engine">Wowza Streaming Engine</option><option value="5" label="YouTube">YouTube</option></select>
+                  <!-- Generic RTMP -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" class="">
+                    <select class="form-control generic-url1 ng-pristine ng-untouched ng-valid ng-valid-required" ng-model="outputRtmp.data.protocol" type="text" required="">
+                      <option value="rtmp" selected="selected">rtmp://</option>
+                      <option value="rtmps">rtmps://</option>
+                    </select>
+                    <input ng-model="outputRtmp.data.identifier.rtmp_service_data.url" type="text" class="form-control generic-url2 ng-pristine ng-untouched ng-valid" placeholder="URL" ng-blur="outputRtmp.parseURL()">
+                    <br>
+                  </span>
+                  <!-- Wowza -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" class="ng-hide">
+                    <input class="form-control wowza-url1 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.server" type="text" placeholder="Server">
+                    <span class="wowza-url2">:</span>
+                    <input class="form-control wowza-url3 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.port" type="text" placeholder="Port (1935)">
+                    <br>
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.application" type="text" placeholder="Application">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.stream_name" type="text" placeholder="Stream Name">
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.username" type="text" placeholder="Username (Optional)">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.password" type="password" placeholder="Password (Optional)">
+                    <br>
+                  </span>
+                  <!-- Wowza Cloud -->
+                  <span ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" class="ng-hide">
+                    <input class="form-control wowza-url1 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.server" type="text" placeholder="Server">
+                    <span class="wowza-url2">:</span>
+                    <input class="form-control wowza-url3 ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.port" type="text" placeholder="Port (1935)">
+                    <br>
+                    <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.stream_name" type="text" placeholder="Stream Name">
+                    <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.username" type="text" placeholder="Username (Optional)">
+                    <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.password" type="password" placeholder="Password (Optional)">
+                    <br>
+                  </span>
+                  <!-- YouTube -->
+                  <span class="youtube ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube">
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.access_token == null">
+                      <label class="ng-binding">Pair with YouTube account</label>
+                      <br>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.pairWithYouTube()">
+                        <i ng-show="outputRtmp.youTubePairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.youTubePairing" class="ng-binding">Start Pairing</span>
+                      </button>
+                      <br>
+                      <span ng-show="outputRtmp.youTubePairing" class="ng-hide">
+                        <label class="ng-binding">To complete the pairing process:</label>
+                        <ul>
+                          <li class="ng-binding">
+                            Pairing Code: 
+                            <button ng-hide="outputRtmp.youTubeUserCode == ''" type="button" class="btn btn-default btn-copy ng-binding ng-hide" ng-click="outputRtmp.copyYouTubeCode()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy Code</button>
+                            <i class="fa fa-spinner fa-spin user-code" ng-show="outputRtmp.youTubeUserCode == ''"></i>
+                          </li>
+                          <li><a href="" target="_blank" class="ng-binding">Login to Google YouTube (opens in new window)</a></li>
+                        </ul>
+                      </span>
+                    </div>
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.access_token != null" class="ng-hide">
+                      <div ng-show="outputRtmp.youTubeStreamsList.length == 0" class="ng-hide">
+                        <label class="ng-binding">YouTube Stream List not yet Available</label>
+                        <div class="padded ng-binding">Please complete the following steps to activate a YouTube Stream</div>
+                        <ol>
+                          <li class="ng-binding">Browse to the following URL and enable live streaming</li>
+                          <ul>
+                            <li><a href="https://www.youtube.com/features" target="_blank">https://www.youtube.com/features</a></li>
+                          </ul>
+                          <li class="ng-binding">Browse to the following URL to create a default stream</li>
+                          <ul>
+                            <li><a href="https://www.youtube.com/live_dashboard" target="_blank">https://www.youtube.com/live_dashboard</a></li>
+                          </ul>
+                        </ol>
+                      </div>
+                      <div ng-show="outputRtmp.youTubeStreamsList.length != 0">
+                        <label class="ng-binding">Streams List for </label>
+                        <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as item.title for item in outputRtmp.youTubeStreamsList track by item.id" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                      </div>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.getYouTubeStreamsList()">
+                        <i ng-show="outputRtmp.youTubePairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.youTubePairing" class="ng-binding">Refresh</span>
+                      </button>
+                    </div>
+                  </span>
+                  <!-- Facebook -->
+                  <span class="facebook ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook">
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.user_access_token == null">
+                      <label class="top-pad ng-binding">Pair with Facebook account</label>
+                      <br>
+                      <a href="#" class="logo">
+                        <img src="Streaming%20Dashboard_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
+                      </a>
+                      <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                      <br>
+                      <span ng-show="outputRtmp.facebookPairing" class="ng-hide">
+                        <label class="ng-binding">To complete the pairing process:</label>
+                        <ul>
+                          <li class="ng-binding">
+                            Pairing Code: 
+                            <button ng-hide="outputRtmp.facebookUserCode == ''" type="button" class="btn btn-default btn-copy ng-binding ng-hide" ng-click="outputRtmp.copyFacebookCode()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy Code</button>
+                            <i class="fa fa-spinner fa-spin user-code" ng-show="outputRtmp.facebookUserCode == ''"></i>
+                          </li>
+                          <li><a href="" target="_blank" class="ng-binding">Login to Facebook (opens in new window)</a></li>
+                        </ul>
+                      </span>
+                    </div>
+                    <div ng-show="outputRtmp.data.identifier.rtmp_service_data.user_access_token != null" class="ng-hide">
+                      <div ng-show="outputRtmp.facebookPagesList.length == 0" class="ng-hide">
+                        <label class="ng-binding">Facebook Pages List not yet Available</label>
+                        <div class="padded ng-binding">Please complete the following steps</div>
+                        <ol>
+                          <li class="ng-binding">Browse to the following URL and create a page</li>
+                          <ul>
+                            <li><a href="https://www.facebook.com/pages/?category=your_pages" target="_blank">https://www.facebook.com/pages/?category=your_pages</a></li>
+                          </ul>
+                        </ol>
+                      </div>
+                      <div ng-show="outputRtmp.facebookPagesList.length != 0">
+                        <label class="ng-binding">Facebook pages for </label>
+                        <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as item.name for item in outputRtmp.facebookPagesList track by item.page_id" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                      </div>
+                      <button type="button" class="btn btn-primary" ng-click="outputRtmp.getFacebookAccountInfo()">
+                        <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
+                        <span ng-hide="outputRtmp.facebookPairing" class="ng-binding">Refresh</span>
+                      </button>
+                    </div>
+                  </span>
+                  <!-- MediaFusion -->
+                  <span class="mediafusion ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion">
+                    <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtmp.data.identifier.rtmp_service_data.apiKey" type="text" placeholder="API Key">
+                    <button type="button" class="btn btn-primary btn-right min-width" ng-click="outputRtmp.getMediaFusionBroadcasts()">
+                      <i ng-show="outputRtmp.isBusy" class="fa fa-spinner fa-spin ng-hide"></i>
+                      <span ng-hide="outputRtmp.isBusy" class="ng-binding">Get Broadcasts</span>
+                    </button>
+                    <span ng-show="outputRtmp.mediaFusionBroadcastList.length &gt; 0" class="ng-hide">
+                      <label class="ng-binding">Upcoming Broadcast List</label>
+                      <select ng-model="outputRtmp.data.identifier.rtmp_service_data" ng-options="item as (item.eventStartTime + ' ' + item.eventName + item.frequency) for item in outputRtmp.mediaFusionBroadcastList track by item.eventName" type="text" class="form-control ng-pristine ng-untouched ng-valid"><option value="?" selected="selected" label=""></option></select>
+                    </span>
+                  </span>
+                </form>
+              </div>
+            </div>
+          </div><!-- end ngRepeat: outputRtmp in [outputRtmp1, outputRtmp2, outputRtmp3] -->
+          <div ng-show="outputTabs[outputHttpPush.tabIndex].active" class="ng-hide">
+            <div class="http-streaming" ng-hide="editModalLoading">
+              <form name="editmodalform" role="form" class="ng-pristine ng-valid ng-valid-min">
+                <label class="padded-lg ng-binding">HTTP Push</label>
+                <input type="checkbox" data-size="small" name="httpStreamingCheckbox3">
+                <div>
+                  <label class="ng-binding">Segment Window</label>
+                  <br>
+                  <input class="form-control md ng-pristine ng-untouched ng-valid" ng-model="outputHttpPush.data.identifier.http_streaming.num_segments" type="number">
+                  <span class="suffix ng-binding">segments of length</span>
+                  <input class="form-control md ng-pristine ng-untouched ng-valid" ng-model="outputHttpPush.data.identifier.http_streaming.segment_length" type="number">
+                  <span class="suffix ng-binding">second(s)</span>
+                </div>
+                <div class="ull-group">
+                  <label class="padded-sm ng-binding">Ultra Low Latency</label>
+                  <input class="enable-switch" type="checkbox" data-size="mini" id="enableUltraLowLatency" name="enableUltraLowLatency3">
+                  <br>
+                  <div class="chunk-label ng-binding">Chunk Duration</div>
+                  <input class="form-control md top-pad ng-pristine ng-untouched ng-valid ng-valid-min" name="chunk_interval" ng-disabled="!outputHttpPush.data.identifier.http_streaming.enable_ultra_low_latency" ng-model="outputHttpPush.data.identifier.http_streaming.chunk_interval.interval" type="number" min="1" disabled="disabled">
+                  <select class="form-control lg left-pad ng-pristine ng-untouched ng-valid" ng-disabled="!outputHttpPush.data.identifier.http_streaming.enable_ultra_low_latency" ng-model="outputHttpPush.data.identifier.http_streaming.chunk_interval.unit" ng-options="item for item in outputHttpPush.data.identifier.http_streaming.chunk_interval.possible_units" ng-change="outputHttpPush.convertChunkSize()" type="text" disabled="disabled"><option value="?" selected="selected" label=""></option></select>
+                  <span class="suffix ng-binding"></span>
+                </div>
+                <div class="sync-group ng-hide" ng-show="outputHttpPush.data.identifier.http_streaming.protocols.indexOf('DASH') &gt;= 0">
+                  <label class="padded-sm ng-binding">DASH Presentation Delay (SPD)</label>
+                  <input class="enable-switch" type="checkbox" data-size="mini" id="enableSynchronization" name="enableSynchronization3">
+                  <br>
+                  <input class="form-control md ng-pristine ng-untouched ng-valid ng-valid-min" name="presentation_delay" ng-disabled="!outputHttpPush.data.identifier.http_streaming.enable_synchronization" ng-model="outputHttpPush.data.identifier.http_streaming.dash_presentation_delay" type="number" min="0" disabled="disabled">
+                  <span class="suffix ng-binding">second(s)</span>
+                </div>
+                <br>
+                <span>
+                  <label class="ng-binding">HTTP Push URL</label>
+                  <input ng-model="outputHttpPush.data.identifier.http_streaming.push_url" type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="URL">
+                </span>
+              </form>
+            </div>
+          </div>
+          <div ng-show="outputTabs[outputHttpPull.tabIndex].active" class="ng-hide">
+            <div class="http-streaming" ng-hide="editModalLoading">
+              <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                <label class="padded-lg ng-binding">HTTP Pull</label>
+                <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="httpStreamingCheckbox4"></div></div>
+                <br>
+                <div ng-show="outputHttpPull.data.identifier.http_streaming.protocols.indexOf('DASH') &gt;= 0" class="ng-hide">
+                  <label class="ng-binding">Local DASH: </label><span class="ng-binding"> http://192.168.1.2/live/manifest.mpd</span>
+                  <button type="button" class="btn btn-default btn-copy ng-binding" ng-click="outputHttpPull.copyURL('dash')" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <br>
+                </div>
+                <div ng-show="outputHttpPull.data.identifier.http_streaming.protocols.indexOf('HLS') &gt;= 0" class="">
+                  <label class="ng-binding">Local HLS: </label><span class="ng-binding"> http://192.168.1.2/live/master.m3u8</span>
+                  <button type="button" class="btn btn-default btn-copy ng-binding" ng-click="outputHttpPull.copyURL('hls')" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                  <br>
+                </div>
+                <div class="segment-group">
+                  <label class="ng-binding">Segment Window</label>
+                  <br>
+                  <input class="form-control md ng-pristine ng-untouched ng-valid" ng-model="outputHttpPull.data.identifier.http_streaming.num_segments" type="number" value="10">
+                  <span class="suffix ng-binding">segments of length</span>
+                  <input class="form-control md ng-pristine ng-untouched ng-valid" ng-model="outputHttpPull.data.identifier.http_streaming.segment_length" type="number" value="2">
+                  <span class="suffix ng-binding">second(s)</span>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div ng-show="outputTabs[outputRtsp.tabIndex].active" class="ng-hide">
+            <div class="rtsp" ng-hide="editModalLoading">
+              <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                <label class="padded-lg ng-binding">RTSP Server</label>
+                <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small bootstrap-switch-id-rtspCheckbox"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" id="rtspCheckbox" name="rtspCheckbox"></div></div>
+                <button type="button" class="btn btn-default btn-copy ng-binding" ng-click="outputRtsp.copyURL()" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
+                <br>
+                <label class="ng-binding">URL: </label><span class="ng-binding"> rtsp://192.168.1.2:554/default</span>
+                <br>
+                <span class="name-group">
+                  <label class="ng-binding">Stream Name</label>
+                  <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtsp.data.identifier.rtsp_stream_name" type="text" placeholder="Stream Name" value="default">
+                </span>
+                <span class="port-group">
+                  <label class="ng-binding">Port</label>
+                  <input class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputRtsp.data.identifier.tcp_port" type="number" placeholder="Port" value="554">
+                </span>
+              </form>
+            </div>
+          </div>
+          <div ng-show="outputTabs[outputFile.tabIndex].active" class="ng-hide">
+            <div class="file-record" ng-hide="editModalLoading">
+              <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                <label class="padded-lg ng-binding">Record to External Storage</label>
+                <div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small bootstrap-switch-id-saveToUSB"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" id="saveToUSB" name="saveToUSB"></div></div>
+                <br>
+                <label class="ng-binding">Filename</label>
+                <br>
+                <input ng-model="outputFile.data.identifier.file_record.filename_base" type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Filename" value="VID">
+                <!-- <select ng-model="outputFile.data.identifier.file_record.file_format.value" type="text" ng-options="item as ('.' + item | lowercase) for item in outputFile.data.identifier.file_record.file_format.possible_values" class="form-control"></select> -->
+                <br>
+                <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="outputFile.data.identifier.file_record.file_format.value == _strings.Rest.MP4">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+                  When saving as MP4, please allow extra time for files to convert.
+                </span></div>
+</div>
+                <br>
+                <div class="drive-name">
+                  <label class="padded ng-binding">Current Storage Device: </label><span ng-show="outputFile.data.identifier.file_record.drive_mounted" class="ng-binding ng-hide"> </span>
+                </div>
+                <br>
+                <div class="alert ng-isolate-scope alert-danger" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="danger" ng-show="outputFile.storageDevices.length == 0">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+                  No storage device with a compatible filesystem was found.
+                </span></div>
+</div>
+                <span>
+                  <span ng-show="outputFile.storageDevices.length &gt; 1 || (outputFile.storageDevices.length == 1 &amp;&amp; outputFile.data.identifier.file_record.drive_name != outputFile.storageDevices[0].uuid)" class="ng-hide">
+                    <br>
+                    <label class="ng-binding">Available Storage Devices</label>
+                    <select class="form-control ng-pristine ng-untouched ng-valid" ng-model="outputFile.displayedStorageDetails" ng-change="outputFile.updateRemovableStorageDetails()" ng-options="item as item.displayName for item in outputFile.storageDevices track by item.uuid"><option value="?" selected="selected" label=""></option></select>
+                    <br>
+                  </span>
+                </span>
+                <div ng-show="outputFile.displayedStorageDetails.uuid" class="ng-hide">
+                  <br>
+                  <span class="big-text ng-binding">NaN&nbsp;&nbsp;</span>
+                  <span class="ng-binding">used of NaN </span>
+                  <br>
+                  <div class="progress ng-isolate-scope" ng-hide="outputFile.data.identifier.file_record.status == 'FILE_STORAGE_DEVICE_FULL'" max="1" value="outputFile.drivePercentFull" type="info">
+  <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="1" ng-style="{width: (percent &lt; 100 ? percent : 100) + '%'}" aria-valuetext="0%" ng-transclude="" style="width: 0%;"></div>
+</div>
+                  <div class="progress ng-isolate-scope ng-hide" ng-show="outputFile.data.identifier.file_record.status == 'FILE_STORAGE_DEVICE_FULL'" max="1" value="outputFile.drivePercentFull" type="danger">
+  <div class="progress-bar progress-bar-danger" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="1" ng-style="{width: (percent &lt; 100 ? percent : 100) + '%'}" aria-valuetext="0%" ng-transclude="" style="width: 0%;"></div>
+</div>
+                  <span class="ng-binding"><span ng-hide="recordingTimeAvailable.hours == 0" class="ng-binding">0 hours</span> 0 minutes storage remaining @4000kbps</span>
+                  <br>
+                  <div class="alert-lg alert ng-isolate-scope alert-danger  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="danger" ng-show="outputFile.data.identifier.file_record.status == 'FILE_STORAGE_DEVICE_TOO_SLOW'">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+                    Storage device is too slow. Try using a faster device or lowering the video bitrate.
+                  </span></div>
+</div>
+                  <button type="button" class="btn btn-default btn-files" popover-placement="bottom-left" popover-template="'popoverTemplateFilesOnUSB.html'">
+                    <span class="pull-left ng-binding">Recordings on Storage Device </span><i class="pull-right fa fa-chevron-down"></i>
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div ng-show="outputTabs[outputFile.ftpTabIndex].active" class="ng-hide">
+            <div class="ftp-upload" ng-hide="editModalLoading">
+              <form name="editmodalform" role="form" class="ng-pristine ng-valid">
+                <label class="padded-lg ng-binding">Upload Recorded Files</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small bootstrap-switch-id-uploadToFTP"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" id="uploadToFTP" name="uploadToFTP"></div></div>
+                <div class="alert-lg alert ng-isolate-scope alert-danger  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="danger" ng-show="outputFile.data.identifier.ftp_upload.status == 'FTP_FAILURE_STORAGE_DEVICE_TOO_SLOW'">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+                  Upload was automatically turned off.
+                  </span><br class="ng-scope"><span class="ng-binding ng-scope">
+                  Storage device is too slow. Try using a faster device or lowering the video bitrate.
+                </span></div>
+</div>
+                <div class="alert ng-isolate-scope alert-danger  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="danger" ng-show="!outputFile.active &amp;&amp; outputFile.data.identifier.ftp_upload.upload_to_ftp">
+    <button ng-show="closeable" type="button" class="close ng-hide" ng-click="close()">
+        <span aria-hidden="true">×</span>
+        <span class="sr-only">Close</span>
+    </button>
+    <div ng-transclude=""><span class="ng-binding ng-scope">
+                  Upload Recorded Files has been enabled, but no files are currently being recorded.
+                </span></div>
+</div>
+                <br>
+                <label class="ng-binding">FTP Server</label>
+                <br>
+                <input ng-model="outputFile.data.identifier.ftp_upload.ftp_server" ng-change="outputFile.ftpServerStatus = 'off'" type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Server Name or IP Address">
+                <div class="status">
+                  <span class="text-danger ng-hide" ng-show="outputFile.ftpServerStatus == 'remove'" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateFtpServerStatus.html'"><i class="fa fa-remove"></i></span>
+                  <span class="text-center ng-hide" ng-show="outputFile.ftpServerStatus == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span class="text-success ng-hide" ng-show="outputFile.ftpServerStatus == 'check'"><i class="fa fa-check"></i></span>
+                </div>
+                <label class="padded ng-binding">Authentication</label>
+                <br>
+                <input class="form-control half-left ng-pristine ng-untouched ng-valid" ng-model="outputFile.data.identifier.ftp_upload.ftp_username" ng-change="outputFile.ftpAuthStatus = 'off'" type="text" placeholder="Username">
+                <input class="form-control half-right ng-pristine ng-untouched ng-valid" ng-model="outputFile.data.identifier.ftp_upload.ftp_password" ng-change="outputFile.ftpAuthStatus = 'off'" type="password" placeholder="Password">
+                <div class="status">
+                  <span class="text-danger ng-hide" ng-show="outputFile.ftpAuthStatus == 'remove'" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateFtpAuthStatus.html'"><i class="fa fa-remove"></i></span>
+                  <span class="text-center ng-hide" ng-show="outputFile.ftpAuthStatus == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span class="text-success ng-hide" ng-show="outputFile.ftpAuthStatus == 'check'"><i class="fa fa-check"></i></span>
+                </div>
+                <label class="padded ng-binding">FTP Filepath</label>
+                <br>
+                <input ng-model="outputFile.data.identifier.ftp_upload.file_path" ng-change="outputFile.ftpFilepathStatus = 'off'" type="text" class="form-control ng-pristine ng-untouched ng-valid" placeholder="Filepath">
+                <div class="status">
+                  <span class="text-danger ng-hide" ng-show="outputFile.ftpFilepathStatus == 'remove'" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateFtpFilepathStatus.html'"><i class="fa fa-remove"></i></span>
+                  <span class="text-center ng-hide" ng-show="outputFile.ftpFilepathStatus == 'spinner'"><i class="fa fa-spinner fa-spin"></i></span>
+                  <span class="text-success ng-hide" ng-show="outputFile.ftpFilepathStatus == 'check'"><i class="fa fa-check"></i></span>
+                </div>
+                <label class="padded ng-binding">Delete file from storage after upload</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-mini bootstrap-switch-id-deleteAfterUpload"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="mini" id="deleteAfterUpload" name="deleteAfterUpload"></div></div>
+                <br>
+                <button ng-show="outputFile.data.identifier.ftp_upload.ftp_files_remaining == 0" type="button" class="btn btn-primary" ng-click="outputFile.testFTP()">
+                  <i ng-show="outputFile.testingFTP" class="fa fa-spinner fa-spin ng-hide"></i>
+                  <span ng-hide="outputFile.testingFTP" class="ng-binding">Test Connection</span>
+                </button>
+                <span ng-show="outputFile.data.identifier.ftp_upload.ftp_files_remaining &gt; 0" class="ng-binding ng-hide">
+                  <label class="ng-binding">Current File Upload Status:</label>
+                  <div class="progress-striped active progress ng-isolate-scope" max="outputFile.data.identifier.ftp_upload.ftp_total_bytes" value="outputFile.data.identifier.ftp_upload.ftp_bytes_uploaded" type="info">
+  <div class="progress-bar progress-bar-info" ng-class="type &amp;&amp; 'progress-bar-' + type" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="0" ng-style="{width: (percent &lt; 100 ? percent : 100) + '%'}" aria-valuetext="%" ng-transclude="" style="width: 100%;"></div>
+</div>
+                  Time elapsed: ::
+                  <br>
+                  Files to be uploaded: 0
+                </span>
+                <br>
+                <div>
+                  <button type="button" class="btn btn-default" popover-placement="bottom-left" popover-template="'popoverTemplateFTPStatusHistory.html'">
+                    <span class="pull-left ng-binding">FTP Upload History</span><i class="pull-right fa fa-chevron-down"></i><i ng-show="outputFile.ftpFailureInHistory" class="text-warning pull-right fa fa-exclamation-circle ng-hide"></i>
+                  </button>
+                </div>
+                <button type="button" class="btn btn-primary ng-binding" ng-click="outputFile.clearFTPHistory()">Clear History</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="text-success pull-left text-status ng-binding ng-hide" ng-show="msg"></div>
+        <div class="text-danger pull-left text-status ng-binding ng-hide" ng-show="err"></div>
+        <button type="button" class="btn btn-primary btn-dialog" ng-show="!editModalLoading" ng-click="saveOutputSettings(true)">
+          <i ng-show="saveLoading" class="fa fa-spinner fa-spin ng-hide"></i>
+          <span ng-hide="saveLoading" class="ng-binding">OK</span>
+        </button>
+        <button type="button" class="btn btn-default btn-dialog ng-binding" ng-show="!editModalLoading" ng-click="closeOutputSettings()">Cancel</button>
+        <button type="button" class="btn btn-default btn-dialog" ng-show="!editModalLoading" ng-click="saveOutputSettings(false)">
+          <i ng-show="saveLoading" class="fa fa-spinner fa-spin ng-hide"></i>
+          <span ng-hide="saveLoading" class="ng-binding">Apply</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!--  End Of Modal -->
+        <div class="text-center ng-hide" ng-show="devices_loading"> <i class="fa fa-spinner fa-spin fa-spinning"></i></div>
+        <div class="push"></div>
+      </div>
+      <div ng-show="_content.Footer.Exists" class="footer ng-isolate-scope">
+  <span class="footer-line"></span>
+  <div class="footer-text">
+    <ul>
+      <li ng-show="_content.Licenses.Exist"><a href="http://192.168.1.2/licenses" class="ng-binding">Licenses</a></li>
+      <li ng-show="_content.Licenses.Exist" class="line"></li>
+      <li ng-show="_content.LegalNotice.Exists"><a href="http://192.168.1.2/legal" class="ng-binding">Legal Notice</a></li>
+      <li ng-show="_content.LegalNotice.Exists" class="line"></li>
+      <li class="ng-binding">© Copyright 2019 Videon Central Inc. All Rights Reserved.</li>
+    </ul>
+  </div>
+</div>
+    </div>
+  </div>
+</div></body></html>

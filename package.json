@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "npm run compile-typescript && node ./output/script.js",
+    "start": "npm run compile-typescript && node ./main.js",
     "compile-typescript": "tsc main.ts"
   },
   "dependencies": {

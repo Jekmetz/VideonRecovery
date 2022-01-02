@@ -1,0 +1,990 @@
+/* Videon-specific colors */
+/*
+ * Base structure
+ */
+html,
+.start {
+  height: 100%;
+}
+/* Move down content because we have a fixed header that is 50px tall */
+body {
+  padding-top: 50px;
+  height: 100%;
+}
+.content-area {
+  padding-top: 20px;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: -20px auto -30px;
+}
+.content-area.advanced {
+  padding-left: 10px;
+}
+.content-area.help {
+  padding-left: 5px;
+}
+.container-fluid {
+  height: 100%;
+  width: 1000px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+.row {
+  height: 100%;
+  padding-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+}
+a {
+  color: #FFA02F;
+}
+a:hover,
+a:focus {
+  color: #DE8C28;
+}
+a.table-link {
+  color: #333;
+}
+a.table-link:hover,
+a.table-link:focus {
+  color: #222;
+  text-decoration: underline;
+}
+th,
+td {
+  vertical-align: middle !important;
+}
+.top-pad {
+  margin-top: 5px;
+}
+.left-pad {
+  margin-left: 10px;
+}
+hr.padded {
+  margin: 40px 0px;
+}
+i.padded {
+  margin: 10px;
+}
+div.padded {
+  margin: 15px 0px;
+}
+i.fa-lock {
+  font-weight: bold;
+  color: #FFA02F;
+}
+label.padded-sm {
+  margin: 0px 10px 0px 0px;
+}
+label.padded {
+  margin: 10px 5px 15px 0px;
+}
+label.padded-lg {
+  margin: 15px 15px 25px 0px;
+}
+label.light {
+  font-weight: normal;
+}
+.alert {
+  height: 40px;
+  padding-top: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+span.suffix {
+  padding: 2px;
+  vertical-align: sub;
+}
+p.xml-popover {
+  text-align: center;
+  margin-bottom: 0px;
+}
+.text-status {
+  padding: 5px 0px 0px 10px;
+}
+/*
+ * Top Header
+ */
+.navbar-fixed-top {
+  border: 0;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+  background: #4D4F53;
+  padding-bottom: 60px;
+  z-index: 999;
+}
+.navbar-fixed-top .container-fluid {
+  padding-bottom: 5px;
+}
+.navbar-fixed-top .alert-container {
+  display: inline-block;
+}
+.navbar-fixed-top .alert {
+  width: 500px;
+  border-radius: 0px 0px 8px 8px;
+  margin: 0px 0px 0px 80px;
+  top: 0px;
+  position: absolute;
+}
+.navbar-fixed-top ul {
+  padding-top: 15px;
+  color: #FFF;
+  float: right;
+}
+.navbar-fixed-top li {
+  display: inline;
+  padding-right: 2px;
+}
+.navbar-fixed-top li.line {
+  padding: 2px;
+  border-left: solid #FFF 1px;
+}
+.navbar-fixed-top a img {
+  max-height: 35px;
+}
+/*
+ * Navigation Tabs
+ */
+.sidebar {
+  width: 100%;
+  position: fixed;
+  top: 60px;
+  z-index: 1000;
+  display: block;
+  padding: 0px;
+  padding-top: 15px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background: #4D4F53;
+}
+.sidebar a {
+  color: #FFF;
+}
+.nav-sidebar {
+  margin-bottom: 20px;
+}
+.nav-sidebar li {
+  display: inline;
+}
+.nav-sidebar > li > a {
+  display: inline;
+  padding-right: 20px;
+  padding-left: 20px;
+}
+.nav-sidebar > li > a.extra-pad,
+.nav-sidebar > li > a.extra-pad-first {
+  padding-left: 17px;
+  padding-right: 17px;
+  border-top: solid #5f6267 1px;
+  padding-top: 15px;
+  margin-left: -2px;
+  margin-right: -2px;
+}
+.nav-sidebar > li > a.extra-pad.large,
+.nav-sidebar > li > a.extra-pad-first.large {
+  padding-left: 488px;
+  padding-top: 15px;
+}
+.nav-sidebar > li > a.extra-pad.small,
+.nav-sidebar > li > a.extra-pad-first.small {
+  padding-left: 425px;
+  padding-top: 17px;
+}
+.nav-sidebar > li > a:hover {
+  color: #FFA02F;
+  background-color: #4D4F53;
+  border-top-color: #FFA02F;
+  border-top-style: solid;
+  border-top-width: 1px;
+  padding-top: 15px;
+}
+.nav-sidebar > li > a.extra-pad-first:hover {
+  color: #FFA02F;
+  background-color: #4D4F53;
+  border-top: solid #5f6267 1px;
+}
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a.extra-pad,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  border-top: solid #FFA02F 1px;
+  padding-top: 15px;
+  color: #FFA02F;
+}
+/*
+ * Encoder Control
+ */
+div.rtmp-help-template {
+  width: 350px;
+}
+div.rtmp-help-template ol {
+  padding-left: 1.1em;
+}
+div.files-on-usb {
+  margin: -9px -14px;
+  padding: 0px 5px;
+  width: 505px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 300px;
+}
+div.files-on-usb table {
+  table-layout: fixed;
+  margin-bottom: 0px;
+}
+div.files-on-usb table .alert {
+  margin: 0px;
+  padding: 5px;
+}
+div.files-on-usb table tbody td {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 5px 8px;
+}
+div.attention-header {
+  white-space: nowrap;
+  font-size: 25px;
+}
+div.no-files-usb {
+  white-space: nowrap;
+  margin-top: 15px;
+}
+span.no-files-ftp {
+  white-space: nowrap;
+  padding-bottom: 10px;
+}
+div.ftp-status {
+  margin: -9px -14px;
+  padding: 0px 5px;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-width: 507px;
+  max-height: 250px;
+}
+div.ftp-status table {
+  table-layout: fixed;
+}
+div.ftp-status table td.cell1 {
+  width: 20px;
+  padding-left: 6px;
+}
+div.ftp-status table td.cell2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 5px 8px;
+  width: 100%;
+}
+div.ftp-status table td.cell3 {
+  width: 175px;
+  white-space: nowrap;
+}
+p.xml-status {
+  text-align: center;
+  margin-bottom: 0px;
+}
+ul.youtube-status {
+  margin: 5px 0px 5px -20px;
+}
+.encoder-control .modal-body {
+  width: 76%;
+  margin: 0 auto;
+}
+.encoder-control .form-control {
+  display: inline-block;
+}
+.encoder-control th.col2 {
+  width: 224px;
+}
+.encoder-control th.col3 {
+  width: 100px;
+}
+.encoder-control th.col4 {
+  width: 86px;
+}
+.encoder-control th.col5 {
+  width: 86px;
+}
+.encoder-control th.col6 {
+  width: 122px;
+}
+.encoder-control th.col7 {
+  width: 122px;
+  padding: 0px 12px 0px 6px;
+}
+.encoder-control th .ellipsis {
+  width: 225px;
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.encoder-control td.col2 {
+  padding: 5px 0px;
+}
+.encoder-control td.col2 select {
+  height: 32px;
+}
+.encoder-control td.col6,
+.encoder-control td.col7 {
+  padding: 0px 8px;
+}
+.encoder-control .config-modal .alert {
+  width: 550px;
+  margin: 10px 0px 0px 24px;
+}
+.encoder-control .config-modal .modal-dialog {
+  width: 600px;
+}
+.encoder-control .config-modal label {
+  margin-top: 10px;
+}
+.encoder-control .config-modal .modal-body {
+  padding-top: 5px;
+}
+.encoder-control .config-modal .form-control.sm {
+  width: 95px;
+}
+.encoder-control .config-modal .form-control.md {
+  width: 155px;
+}
+.encoder-control .config-modal .form-control.lg {
+  width: 260px;
+}
+.encoder-control .config-modal .form-control.left-pad {
+  margin-left: 5px;
+}
+.encoder-control .config-modal .scaling-group {
+  display: inline-block;
+}
+.encoder-control .config-modal .limit-30-group {
+  display: inline-block;
+  margin: 0px 5px;
+}
+.encoder-control .output-modal .modal-body {
+  display: inline-block;
+}
+.encoder-control .output-modal .half-left {
+  float: left;
+  width: 49%;
+}
+.encoder-control .output-modal .half-right {
+  float: right;
+  width: 49%;
+}
+.encoder-control .output-modal .form-control.sm {
+  width: 95px;
+}
+.encoder-control .output-modal .form-control.md {
+  width: 155px;
+}
+.encoder-control .output-modal .form-control.lg {
+  width: 260px;
+}
+.encoder-control .output-modal .form-control.left-pad {
+  margin-left: 5px;
+}
+.encoder-control .output-modal .alert {
+  margin: 10px 10px 0px 10px;
+}
+.encoder-control .output-modal .modal-dialog {
+  width: 750px;
+}
+.encoder-control .output-modal .modal-middle {
+  display: flex;
+}
+.encoder-control .output-modal .status-icon {
+  display: inline-block;
+  margin-left: 15px;
+}
+.encoder-control .output-modal .status-icon i {
+  transform: scale(1.5, 1.5);
+}
+.encoder-control .output-modal .multicast {
+  width: 95%;
+}
+.encoder-control .output-modal .multicast .url1 {
+  width: 18%;
+}
+.encoder-control .output-modal .multicast .url2 {
+  width: 39%;
+}
+.encoder-control .output-modal .multicast .url3 {
+  width: 5px;
+}
+.encoder-control .output-modal .multicast .url4 {
+  width: 20%;
+}
+.encoder-control .output-modal .multicast .url5 {
+  float: right;
+  width: 17%;
+}
+.encoder-control .output-modal .unicast {
+  width: 95%;
+}
+.encoder-control .output-modal .unicast .url1 {
+  width: 22%;
+}
+.encoder-control .output-modal .unicast .url2 {
+  width: 53%;
+}
+.encoder-control .output-modal .unicast .url3 {
+  width: 5px;
+}
+.encoder-control .output-modal .unicast .url4 {
+  float: right;
+  width: 22%;
+}
+.encoder-control .output-modal .rtmp {
+  display: inline-block;
+  width: 95%;
+}
+.encoder-control .output-modal .rtmp select,
+.encoder-control .output-modal .rtmp input {
+  margin-bottom: 10px;
+}
+.encoder-control .output-modal .rtmp .generic-url1 {
+  width: 24%;
+}
+.encoder-control .output-modal .rtmp .generic-url2 {
+  float: right;
+  width: 75%;
+}
+.encoder-control .output-modal .rtmp .wowza-url1 {
+  width: 72%;
+}
+.encoder-control .output-modal .rtmp .wowza-url2 {
+  width: 5px;
+}
+.encoder-control .output-modal .rtmp .wowza-url3 {
+  float: right;
+  width: 25%;
+}
+.encoder-control .output-modal .rtmp .youtube label {
+  padding-top: 15px;
+}
+.encoder-control .output-modal .rtmp .youtube .btn-primary {
+  min-width: 105px;
+}
+.encoder-control .output-modal .rtmp .youtube .user-code {
+  margin: 6px 0px 8px 30px;
+}
+.encoder-control .output-modal .rtmp .mediafusion label {
+  padding-top: 15px;
+}
+.encoder-control .output-modal .rtmp .mediafusion input {
+  width: 70%;
+}
+.encoder-control .output-modal .rtmp .facebook a.logo {
+  text-decoration: none;
+}
+.encoder-control .output-modal .http-streaming {
+  display: inline-block;
+  width: 95%;
+}
+.encoder-control .output-modal .http-streaming .form-control.md {
+  width: 80px;
+}
+.encoder-control .output-modal .http-streaming .form-control.lg {
+  width: 150px;
+}
+.encoder-control .output-modal .http-streaming .btn-copy {
+  margin-right: 95px;
+  float: right;
+  font-size: 10px;
+}
+.encoder-control .output-modal .http-streaming .ull-group {
+  margin-top: 25px;
+}
+.encoder-control .output-modal .http-streaming .sync-group {
+  margin-top: 25px;
+}
+.encoder-control .output-modal .http-streaming .segment-group {
+  margin-top: 15px;
+}
+.encoder-control .output-modal .http-streaming div.chunk-label {
+  margin-top: 10px;
+}
+.encoder-control .output-modal .rtsp {
+  display: inline-block;
+  width: 95%;
+}
+.encoder-control .output-modal .rtsp .name-group {
+  margin-top: 15px;
+  float: left;
+  width: 74%;
+}
+.encoder-control .output-modal .rtsp .port-group {
+  margin-top: 15px;
+  float: right;
+  width: 24%;
+}
+.encoder-control .output-modal .file-record {
+  width: 95%;
+}
+.encoder-control .output-modal .file-record i.pull-right {
+  padding: 3px 0px 0px 4px;
+}
+.encoder-control .output-modal .file-record .big-text {
+  font-size: 18px;
+}
+.encoder-control .output-modal .file-record .alert {
+  font-weight: normal;
+  width: 100%;
+  margin: 15px 0px 10px 0px;
+}
+.encoder-control .output-modal .file-record .alert.alert-lg {
+  height: 65px;
+}
+.encoder-control .output-modal .file-record .progress {
+  margin-bottom: 5px;
+}
+.encoder-control .output-modal .file-record label.padded {
+  margin: 15px 0px 5px 0px;
+}
+.encoder-control .output-modal .file-record .btn-default {
+  width: 140px;
+  margin: 5px 0px;
+}
+.encoder-control .output-modal .file-record .btn-files {
+  width: 100%;
+  margin: 15px 0px 10px 0px;
+}
+.encoder-control .output-modal .file-record .drive-name {
+  width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: inline-block;
+}
+.encoder-control .output-modal .ftp-upload i.pull-right.fa-chevron-down {
+  padding: 3px 0px 0px 4px;
+}
+.encoder-control .output-modal .ftp-upload i.pull-right.fa-exclamation-circle {
+  font-size: 20px;
+}
+.encoder-control .output-modal .ftp-upload input {
+  width: 95%;
+}
+.encoder-control .output-modal .ftp-upload label.padded {
+  margin: 10px 15px 5px 0px;
+}
+.encoder-control .output-modal .ftp-upload .half-left,
+.encoder-control .output-modal .ftp-upload .half-right {
+  float: none;
+  width: 47%;
+}
+.encoder-control .output-modal .ftp-upload .btn-primary {
+  width: 128px;
+  margin: 10px 0px;
+}
+.encoder-control .output-modal .ftp-upload .btn-default {
+  width: 95%;
+  margin: 10px 0px;
+}
+.encoder-control .output-modal .ftp-upload .progress {
+  width: 95%;
+  margin-bottom: 5px;
+}
+.encoder-control .output-modal .ftp-upload .alert {
+  font-weight: normal;
+  width: 95%;
+  height: 60px;
+  margin: 0px;
+}
+.encoder-control .output-modal .ftp-upload .alert.alert-lg {
+  height: 80px;
+}
+.encoder-control .output-modal .ftp-upload .status {
+  display: inline-block;
+  margin-left: 4px;
+}
+.encoder-control .output-modal .ftp-upload .status i {
+  transform: scale(1.5, 1.5);
+}
+.encoder-control .output-modal .ftp-upload .status .popover {
+  min-width: 125px;
+  text-align: center;
+}
+.encoder-control .nav-tabs-container {
+  display: inline-block;
+  vertical-align: top;
+  width: 20%;
+  font-size: 16px;
+  border-right: 1px solid #DDD;
+}
+.encoder-control .tabs-left > .nav-tabs > li > a {
+  margin-top: -1px;
+  margin-right: -1px;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+}
+.encoder-control .tabs-left > .nav-tabs > li > a:hover,
+.encoder-control .tabs-left > .nav-tabs > li > a:focus {
+  border-color: #EEE #DDD #EEE #EEE;
+}
+.encoder-control .tabs-left > .nav-tabs .active > a,
+.encoder-control .tabs-left > .nav-tabs .active > a:hover,
+.encoder-control .tabs-left > .nav-tabs .active > a:focus {
+  border-color: #DDD transparent #DDD #DDD;
+  border-right-color: #FFF;
+}
+.encoder-control .nav-tabs {
+  border-bottom: 0px;
+}
+.encoder-control .nav-tabs > li > a,
+.encoder-control .nav-tabs > li > a.extra-pad,
+.encoder-control .nav-tabs > li > a:hover,
+.encoder-control .nav-tabs > li > a:focus {
+  color: #333;
+  outline-color: #FFA02F;
+}
+.encoder-control .nav-tabs > li.active > a,
+.encoder-control .nav-tabs > li.active > a.extra-pad,
+.encoder-control .nav-tabs > li.active > a:hover,
+.encoder-control .nav-tabs > li.active > a:focus {
+  color: #FFA02F;
+  outline-color: #FFA02F;
+}
+.encoder-control .nav-tabs > li.disabled > a,
+.encoder-control .nav-tabs > li.disabled > a.extra-pad,
+.encoder-control .nav-tabs > li.disabled > a:hover,
+.encoder-control .nav-tabs > li.disabled > a:focus {
+  color: #AAA;
+}
+/*
+ * Decoder Control
+ */
+.decoder-control .alert {
+  width: 550px;
+  margin: 10px 0px 0px 24px;
+}
+.decoder-control .modal-body {
+  width: 76%;
+  margin: 0 auto;
+}
+.decoder-control .modal-body .alert {
+  width: 100%;
+  margin: 0px 0px 20px 0px;
+}
+.decoder-control th.col1 {
+  width: 335px;
+}
+.decoder-control th.col2 {
+  width: 85px;
+}
+.decoder-control th.col3 {
+  width: 200px;
+}
+.decoder-control th.col4 {
+  width: 85px;
+}
+.decoder-control th.col5 {
+  width: 155px;
+}
+.decoder-control th.col6 {
+  width: 140px;
+}
+.decoder-control th .ellipsis {
+  width: 300px;
+  float: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.decoder-control td.col3 {
+  padding: 5px 10px 5px 25px;
+  width: 200px;
+}
+.decoder-control td.col3 select {
+  height: 32px;
+  width: 145px;
+  float: left;
+}
+.decoder-control td.col3 .icon {
+  float: right;
+  padding-top: 5px;
+}
+.decoder-control td.col5 {
+  padding: 0px;
+}
+.decoder-control td.col6 {
+  padding: 0px 8px;
+}
+.decoder-control .half-left {
+  padding: 0px;
+  width: 45%;
+  float: left;
+}
+.decoder-control .half-right {
+  padding: 0px;
+  width: 45%;
+  float: right;
+}
+.decoder-control .multicast-url1 {
+  display: inline-block;
+  width: 20%;
+}
+.decoder-control .multicast-url2 {
+  display: inline-block;
+  width: 54%;
+}
+.decoder-control .multicast-url3 {
+  display: inline-block;
+  width: 5px;
+}
+.decoder-control .multicast-url4 {
+  display: inline-block;
+  width: 22%;
+}
+.decoder-control .rtmp-url1 {
+  width: 24%;
+  float: left;
+}
+.decoder-control .rtmp-url2 {
+  width: 74%;
+  float: right;
+}
+/*
+ * Device Settings
+ */
+.device-settings form.main {
+  display: inline-block;
+  padding: 10px 0px 0px 50px;
+  width: 500px;
+}
+.device-settings form.main h3 {
+  margin: 0px 0px 15px 0px;
+}
+.device-settings form.main input.small {
+  display: inline-block;
+  width: 102px;
+}
+.device-settings .alert {
+  width: 700px;
+  margin: 10px 0px 15px 0px;
+}
+.device-settings .tab-content {
+  margin-left: 20px;
+}
+.device-settings .nav-pills {
+  float: left;
+  width: 200px;
+  font-size: 16px;
+  padding-right: 25px;
+  border-right: 1px solid #DDD;
+}
+.device-settings .nav-pills > li > a,
+.device-settings .nav-pills > li > a:hover {
+  color: #333;
+}
+.device-settings .nav-pills > li.active > a,
+.device-settings .nav-pills > li.active > a:hover,
+.device-settings .nav-pills > li.active > a:focus {
+  color: #FFF;
+  background-color: #FFA02F;
+}
+/*
+ * Advanced
+ */
+.advanced .storage-modal .modal-dialog {
+  width: 750px;
+}
+.advanced .storage-modal .modal-body {
+  width: 80%;
+  margin: auto;
+}
+/*
+ * Footer
+ */
+.footer {
+  height: 49px;
+}
+.footer-line {
+  display: block;
+  width: 100%;
+  border: none;
+  height: 1px;
+  background: -webkit-gradient(radial, 50% 50%, 0, 50% 50%, 350, from(#555), to(#FFF));
+}
+.footer-text {
+  color: #555;
+  margin-right: auto;
+  margin-left: auto;
+  padding-top: 17px;
+  width: fit-content;
+}
+.footer-text ul,
+.footer-text li {
+  display: inline;
+  padding: 0px;
+}
+.footer-text li {
+  padding: 2px 10px 2px 14px;
+}
+.footer-text li.line {
+  padding: 2px 0px;
+  border-left: solid #555 1px;
+}
+/*
+ * Random Utilities
+ */
+.push {
+  height: 50px;
+}
+.no-padding {
+  padding: 0px !important;
+}
+.modal-sm {
+  width: 500px;
+  margin-top: 115px;
+}
+.modal-lg {
+  width: 600px;
+  margin-top: 115px;
+}
+.dialog-header-confirm {
+  border-radius: 10px 10px 0px 0px;
+  padding: 6px 9px 0px 2px;
+  background-color: #FFF;
+  border-bottom: 0px;
+  min-height: 0px;
+  height: 20px;
+}
+.dialog-header-error {
+  border-radius: 10px 10px 0px 0px;
+  padding: 6px 9px 0px 2px;
+  background-color: #FFF;
+  border-bottom: 0px;
+  min-height: 0px;
+  height: 20px;
+}
+.dialog-header-wait {
+  border-radius: 10px 10px 0px 0px;
+  padding: 6px 9px 0px 2px;
+  background-color: #FFF;
+  border-bottom: 0px;
+  min-height: 0px;
+  height: 20px;
+  height: 0px;
+  padding: 0px;
+}
+.dialog-header-notify {
+  border-radius: 10px 10px 0px 0px;
+  padding: 6px 9px 0px 2px;
+  background-color: #FFF;
+  border-bottom: 0px;
+  min-height: 0px;
+  height: 20px;
+}
+.remove-drive-confirmation {
+  display: block;
+  font-weight: bold;
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+.dialog-list {
+  margin-top: 5px;
+}
+/*
+ * Bootstrap lib modifications
+ */
+.btn.min-width {
+  min-width: 136px;
+}
+.btn-dialog {
+  min-width: 70px;
+}
+.btn-table {
+  width: 105px;
+  padding: 3px;
+}
+.btn-right {
+  float: right;
+}
+.btn-copy {
+  padding: 3px 5px 3px 7px;
+  margin-left: 5px;
+}
+.btn-help {
+  padding: 3px 9px 3px 8px;
+  margin-left: 5px;
+}
+.input-group.default {
+  width: 354px;
+}
+.bootstrap-switch-container {
+  width: 134px !important;
+}
+.text-info {
+  color: #FFF;
+}
+.modal-body {
+  color: #333;
+}
+.form-control:focus {
+  border-color: #FFA02F;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 160, 47, 0.6);
+}
+.btn:focus,
+.btn:active:focus,
+.btn.active:focus,
+.btn.focus,
+.btn:active.focus,
+.btn.active.focus {
+  outline-color: #FFA02F;
+}
+.btn-primary,
+.btn-primary:focus {
+  background-color: #FFA02F;
+  border-color: #DE8C28;
+}
+.btn-primary:hover,
+.btn-primary:active {
+  background-color: #DE8C28;
+  border-color: #DE8C28;
+}
+.btn-primary[disabled],
+.btn-primary:focus[disabled],
+.btn-primary:hover[disabled],
+.btn-primary:active[disabled] {
+  background-color: #FFC37B;
+  border-color: #DEAA6B;
+}
+.close:hover,
+.close:focus {
+  outline-color: #DE8C28;
+  border-color: #DE8C28;
+}
+.bootstrap-switch .bootstrap-switch-handle-on.bootstrap-switch-primary,
+.bootstrap-switch .bootstrap-switch-handle-off.bootstrap-switch-primary {
+  background: #FFA02F;
+}
+.bootstrap-switch.bootstrap-switch-focused {
+  border-color: #FFA02F;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 160, 47, 0.6);
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  background-color: #FFA02F;
+}
+.table-striped > tbody > tr:nth-child(odd) {
+  background-color: #FFFCF7;
+}
+.progress-bar,
+.progress-bar-info {
+  background-color: #FFA02F;
+}
+.progress-bar-success {
+  background-color: #5CB85C;
+}
+.progress-bar-danger {
+  background-color: #D9534F;
+}
+.popover {
+  max-width: 600px;
+}

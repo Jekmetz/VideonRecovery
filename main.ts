@@ -1,4 +1,4 @@
-import { launch } from "puppeteer";
+import {launch} from "puppeteer";
 
 const routines = [];
 

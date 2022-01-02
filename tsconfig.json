@@ -1,7 +1,7 @@
 {
-    "compilerOptions": {
-      "outDir": "output"
-    },
-    "include": ["*.ts"],
-    "exclude": ["node_modules"]
-  }
+  "compilerOptions": {
+    "outDir": "output"
+  },
+  "include": ["*.ts"],
+  "exclude": ["node_modules"]
+}
