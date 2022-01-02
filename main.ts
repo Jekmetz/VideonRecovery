@@ -1,14 +1,18 @@
-import {launch} from "puppeteer";
-
-const routines = [];
+import * as puppeteer from 'puppeteer';
+import config from './config.js';
+import { RoutineFactory } from './routines/routine';
 
 async function main() {
     try {
-        const URL = 'http://192.168.1.2';
-        const browser = await launch({headless: false});
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
+        await page.goto(config.url);
 
-        await page.goto(URL);
+        const routineFactory = new RoutineFactory();
+        for(let routine of config.routines) await routineFactory.runRoutine(routine, page, config);
+        console.log(config.closingText);
+
+        await browser.close();
     } catch (err) {
         console.error('Error in main', err);
     }

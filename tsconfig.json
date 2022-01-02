@@ -1,7 +1,11 @@
 {
-  "compilerOptions": {
-    "outDir": "output"
-  },
-  "include": ["*.ts"],
-  "exclude": ["node_modules"]
+    "compilerOptions": {
+        "outDir": "./dist",
+        "allowJs": true,
+        "target": "es5",
+        "lib": ["es2017", "dom"]
+    },
+        "include": [
+        "./main.ts"
+    ]
 }

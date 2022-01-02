@@ -1,13 +1,16 @@
 {
   "scripts": {
-    "start": "npm run compile-typescript && node ./main.js",
-    "compile-typescript": "tsc main.ts"
+    "start": "npm run clean && npm run build && node ./dist/main.js",
+    "build": "tsc --build",
+    "clean": "rm -rf ./dist"
   },
   "dependencies": {
+    "@types/puppeteer": "^5.4.4",
     "puppeteer": "^13.0.1"
   },
-  "type": "module",
   "devDependencies": {
+    "express": "^4.17.2",
+    "morgan": "^1.10.0",
     "typescript": "^4.5.4"
   }
 }

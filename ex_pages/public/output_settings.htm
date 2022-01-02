@@ -16,16 +16,16 @@
 
     <!-- base href="http://192.168.1.2/" -->
     <!-- Bootstrap core CSS -->
-    <link href="encoder_settings_files/bootstrap.css" rel="stylesheet">
-    <link href="encoder_settings_files/bootstrap-switch.css" rel="stylesheet">
+    <link href="output_settings_files/bootstrap.css" rel="stylesheet">
+    <link href="output_settings_files/bootstrap-switch.css" rel="stylesheet">
 
     <!-- Custom styles -->
-    <link href="encoder_settings_files/dialogs.css" rel="stylesheet">
-    <link href="encoder_settings_files/font-awesome.css" rel="stylesheet">
-    <link href="encoder_settings_files/main.css" rel="stylesheet">
+    <link href="output_settings_files/dialogs.css" rel="stylesheet">
+    <link href="output_settings_files/font-awesome.css" rel="stylesheet">
+    <link href="output_settings_files/main.css" rel="stylesheet">
 
     <!-- styles.css is included last so it can override the styles defined in the above style sheets -->
-    <link href="encoder_settings_files/styles.css" rel="stylesheet">
+    <link href="output_settings_files/styles.css" rel="stylesheet">
   </head>
 
   <!-- ngView:  --><body ng-view="" class="ng-scope modal-open"><script type="text/ng-template" id="popoverTemplateCopy.html" class="ng-scope">
@@ -156,7 +156,7 @@
   <nav class="navbar navbar-fixed-top ng-isolate-scope" role="navigation">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand" href="http://192.168.1.2/index.html"><img alt="Logo" src="encoder_settings_files/logo.png"></a>
+      <a class="navbar-brand" href="http://192.168.1.2/index.html"><img alt="Logo" src="output_settings_files/logo.png"></a>
     </div>
     <div class="alert-container">
       <div class="alert ng-isolate-scope alert-warning  ng-hide" ng-class="['alert-' + (type || 'warning'), closeable ? 'alert-dismissable' : null]" role="alert" type="warning" ng-show="updatesPending &amp;&amp; !extraUpdates">
@@ -274,7 +274,7 @@
           </tbody>
         </table>
 <!-- Configuration Modal -->
-<div ng-keyup="keyboardSaveEncoderSettings($event)" class="modal fade config-modal in" data-backdrop="static" data-keyboard="false" id="configModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="false" style="display: block;"><div class="modal-backdrop fade in" style="height: 955px;"></div>
+<div ng-keyup="keyboardSaveEncoderSettings($event)" class="modal fade config-modal" data-backdrop="static" data-keyboard="false" id="configModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -382,7 +382,7 @@
 </div>
 <!--  End Of Modal -->
 <!-- Output Modal -->
-<div ng-keyup="keyboardSaveOutputSettings($event)" class="modal fade output-modal" data-backdrop="static" data-keyboard="false" id="outputModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" style="display: none;">
+<div ng-keyup="keyboardSaveOutputSettings($event)" class="modal fade output-modal in" data-backdrop="static" data-keyboard="false" id="outputModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="false" style="display: block;"><div class="modal-backdrop fade in" style="height: 955px;"></div>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -501,11 +501,11 @@
                   <label class="padded-lg ng-binding">RTMP Output 1</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-small bootstrap-switch-animate bootstrap-switch-on" style="width: 74px;"><div class="bootstrap-switch-container" style="margin-left: 0px; width: 108px;"><span class="bootstrap-switch-handle-on bootstrap-switch-primary" style="width: 36px;">On</span><span class="bootstrap-switch-label" style="width: 36px;">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default" style="width: 36px;">Off</span><input type="checkbox" data-size="small" name="rtmpCheckbox0" checked="checked"></div></div>
                   <button class="btn btn-default btn-copy ng-binding" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" ng-click="outputRtmp.copyURL()" type="button" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
                   <button class="btn btn-default btn-help" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" type="button" popover-placement="right-top" popover-template="'questionTemplateGenericRtmp.html'"><i class="fa fa-question"></i></button>
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="encoder_settings_files/youtube_logo.png" width="80">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="encoder_settings_files/facebook_logo.png" width="60">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="encoder_settings_files/wowza_logo.png" width="100">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="encoder_settings_files/wowza_cloud_logo.png" width="100">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="encoder_settings_files/mediafusion_logo.png" width="120">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="output_settings_files/youtube_logo.png" width="80">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="output_settings_files/facebook_logo.png" width="60">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="output_settings_files/wowza_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="output_settings_files/wowza_cloud_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="output_settings_files/mediafusion_logo.png" width="120">
                   <div class="status-icon" ng-show="outputRtmp.data.identifier.rtmp_service.value == outputRtmp.activeService" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateRtmpStatus0.html'">
                     <span class="text-danger ng-hide" ng-show="outputRtmp.statusIcon == 'remove'"><i class="fa fa-remove"></i></span>
                     <span class="text-warning" ng-show="outputRtmp.statusIcon == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
@@ -599,7 +599,7 @@
                       <label class="top-pad ng-binding">Pair with Facebook account</label>
                       <br>
                       <a href="#" class="logo">
-                        <img src="encoder_settings_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
+                        <img src="output_settings_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
                       </a>
                       <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
                       <br>
@@ -658,11 +658,11 @@
                   <label class="padded-lg ng-binding">RTMP Output 2</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="rtmpCheckbox1"></div></div>
                   <button class="btn btn-default btn-copy ng-binding" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" ng-click="outputRtmp.copyURL()" type="button" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
                   <button class="btn btn-default btn-help" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" type="button" popover-placement="right-top" popover-template="'questionTemplateGenericRtmp.html'"><i class="fa fa-question"></i></button>
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="encoder_settings_files/youtube_logo.png" width="80">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="encoder_settings_files/facebook_logo.png" width="60">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="encoder_settings_files/wowza_logo.png" width="100">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="encoder_settings_files/wowza_cloud_logo.png" width="100">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="encoder_settings_files/mediafusion_logo.png" width="120">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="output_settings_files/youtube_logo.png" width="80">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="output_settings_files/facebook_logo.png" width="60">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="output_settings_files/wowza_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="output_settings_files/wowza_cloud_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="output_settings_files/mediafusion_logo.png" width="120">
                   <div class="status-icon" ng-show="outputRtmp.data.identifier.rtmp_service.value == outputRtmp.activeService" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateRtmpStatus1.html'">
                     <span class="text-danger ng-hide" ng-show="outputRtmp.statusIcon == 'remove'"><i class="fa fa-remove"></i></span>
                     <span class="text-warning ng-hide" ng-show="outputRtmp.statusIcon == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
@@ -756,7 +756,7 @@
                       <label class="top-pad ng-binding">Pair with Facebook account</label>
                       <br>
                       <a href="#" class="logo">
-                        <img src="encoder_settings_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
+                        <img src="output_settings_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
                       </a>
                       <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
                       <br>
@@ -815,11 +815,11 @@
                   <label class="padded-lg ng-binding">RTMP Output 3</label><div class="bootstrap-switch bootstrap-switch-wrapper bootstrap-switch-off bootstrap-switch-small"><div class="bootstrap-switch-container"><span class="bootstrap-switch-handle-on bootstrap-switch-primary">On</span><span class="bootstrap-switch-label">&nbsp;</span><span class="bootstrap-switch-handle-off bootstrap-switch-default">Off</span><input type="checkbox" data-size="small" name="rtmpCheckbox2"></div></div>
                   <button class="btn btn-default btn-copy ng-binding" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" ng-click="outputRtmp.copyURL()" type="button" popover-trigger="focus" popover-popup-delay="100" popover-placement="bottom" popover-template="'popoverTemplateCopy.html'"><i class="fa fa-clipboard"></i> Copy URL</button>
                   <button class="btn btn-default btn-help" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.GenericRTMP" type="button" popover-placement="right-top" popover-template="'questionTemplateGenericRtmp.html'"><i class="fa fa-question"></i></button>
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="encoder_settings_files/youtube_logo.png" width="80">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="encoder_settings_files/facebook_logo.png" width="60">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="encoder_settings_files/wowza_logo.png" width="100">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="encoder_settings_files/wowza_cloud_logo.png" width="100">
-                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="encoder_settings_files/mediafusion_logo.png" width="120">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.YouTube" src="output_settings_files/youtube_logo.png" width="80">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Facebook" src="output_settings_files/facebook_logo.png" width="60">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.Wowza" src="output_settings_files/wowza_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.WowzaCloud" src="output_settings_files/wowza_cloud_logo.png" width="100">
+                  <img class="left-pad ng-hide" ng-show="outputRtmp.data.identifier.rtmp_service.value == _strings.Rest.MediaFusion" src="output_settings_files/mediafusion_logo.png" width="120">
                   <div class="status-icon" ng-show="outputRtmp.data.identifier.rtmp_service.value == outputRtmp.activeService" popover-placement="bottom" popover-trigger="mouseenter" popover-template="'popoverTemplateRtmpStatus2.html'">
                     <span class="text-danger ng-hide" ng-show="outputRtmp.statusIcon == 'remove'"><i class="fa fa-remove"></i></span>
                     <span class="text-warning ng-hide" ng-show="outputRtmp.statusIcon == 'exclamation'"><i class="fa fa-exclamation-circle"></i></span>
@@ -913,7 +913,7 @@
                       <label class="top-pad ng-binding">Pair with Facebook account</label>
                       <br>
                       <a href="#" class="logo">
-                        <img src="encoder_settings_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
+                        <img src="output_settings_files/facebook_login_button.png" ng-click="outputRtmp.loginWithFacebook()">
                       </a>
                       <i ng-show="outputRtmp.facebookPairing" class="fa fa-spinner fa-spin ng-hide"></i>
                       <br>
@@ -1201,7 +1201,7 @@
       <div class="modal-footer">
         <div class="text-success pull-left text-status ng-binding ng-hide" ng-show="msg"></div>
         <div class="text-danger pull-left text-status ng-binding ng-hide" ng-show="err"></div>
-        <button type="button" class="btn btn-primary btn-dialog" ng-show="!editModalLoading" ng-click="saveOutputSettings(true)">
+        <button type="button" class="btn btn-primary btn-dialog" ng-show="!editModalLoading" ng-click="saveOutputSettings(true)" onclick="window.location.href = '/'">
           <i ng-show="saveLoading" class="fa fa-spinner fa-spin"></i>
           <span ng-hide="saveLoading" class="ng-binding ng-hide">OK</span>
         </button>
